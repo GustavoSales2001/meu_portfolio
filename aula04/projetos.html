@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Projetos - Gustavo Sales</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: Arial, sans-serif;
+}
+
+/* FUNDO IGUAL AO SITE PRINCIPAL */
+body{
+  background-image:url("https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1920&q=80");
+  background-size:cover;
+  background-position:50% 5%;
+  background-attachment:fixed;
+  min-height:100vh;
+  color:white;
+}
+
+/* PELÍCULA */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.75);
+  z-index:-1;
+}
+
+/* HEADER */
+header{
+  text-align:center;
+  padding:30px 20px;
+  background:rgba(20,20,20,0.9);
+  border-bottom:1px solid #444;
+}
+
+header h1{
+  color:#f2f2f2;
+  font-size:32px;
+}
+
+/* CONTAINER */
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:50px 20px;
+}
+
+/* CARD */
+.projeto-card{
+  background:rgba(30,30,30,0.95);
+  border-radius:20px;
+  padding:30px;
+  box-shadow:0 0 20px rgba(0,0,0,.6);
+  animation:fadeIn 1.5s ease;
+}
+
+/* TEXTO */
+.projeto-card h2{
+  color:#eaeaea;
+  margin-bottom:15px;
+}
+
+.projeto-card p{
+  color:#ccc;
+  line-height:1.6;
+  margin-bottom:15px;
+  font-size:15px;
+}
+
+/* BOTÃO */
+.botao{
+  text-align:center;
+  margin-top:30px;
+}
+
+.botao a{
+  display:inline-block;
+  padding:14px 35px;
+  background:#555;
+  color:white;
+  text-decoration:none;
+  border-radius:30px;
+  font-weight:bold;
+  transition:.3s;
+}
+
+.botao a:hover{
+  background:#888;
+  transform:scale(1.05);
+}
+
+/* VOLTAR */
+.voltar{
+  text-align:center;
+  margin-top:40px;
+}
+
+.voltar a{
+  color:#aaa;
+  text-decoration:none;
+  font-size:14px;
+}
+
+.voltar a:hover{
+  color:white;
+}
+
+/* ANIMAÇÃO */
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(40px);}
+  to{opacity:1; transform:translateY(0);}
+}
+
+/* RESPONSIVO */
+@media(max-width:900px){
+  .projeto-card{
+    text-align:center;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Meus Projetos</h1>
+</header>
+
+<div class="container">
+
+  <div class="projeto-card">
+
+    <h2>Projeto: Plataforma de Cursos</h2>
+
+    <p>
+      Este projeto foi desenvolvido com o objetivo de praticar e consolidar meus conhecimentos em
+      desenvolvimento web, utilizando HTML, CSS e JavaScript. O site apresenta uma interface simples,
+      organizada e intuitiva, permitindo ao usuário navegar entre cursos e conteúdos educacionais.
+    </p>
+
+    <p>
+      Durante o desenvolvimento deste projeto, trabalhei com conceitos de estruturação de páginas,
+      estilização visual, responsividade e organização de layout, buscando criar uma experiência agradável
+      para o usuário final. Também utilizei boas práticas de design para manter o site limpo e funcional.
+    </p>
+
+    <p>
+      Este projeto representa minha evolução na área de Front-end e reforça meu interesse em atuar como
+      desenvolvedor Full Stack, unindo lógica de programação, criatividade e tecnologia para construir
+      soluções modernas e eficientes.
+    </p>
+
+    <div class="botao">
+    <a href="https://gustavosales2001.github.io/portf.html" target="_blank">
+        🌐 Acessar Projeto
+      </a>
+    </div>
+
+  </div>
+
+ <div class="voltar">
+  <a href="portf.html">⬅ Voltar ao Portfólio</a>
+</div>
+
+</div>
+
+</body>
+</html>

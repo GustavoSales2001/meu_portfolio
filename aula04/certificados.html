@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Certificados - Gustavo Sales</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: Arial, sans-serif;
+}
+
+/* FUNDO IGUAL AO SITE PRINCIPAL */
+body{
+  background-image:url("https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1920&q=80");
+  background-size:cover;
+  background-position:50% 5%;
+  background-attachment:fixed;
+  min-height:100vh;
+  color:white;
+}
+
+/* PELÍCULA ESCURA */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.75);
+  z-index:-1;
+}
+
+/* HEADER */
+header{
+  text-align:center;
+  padding:40px 20px;
+  background:rgba(20,20,20,0.9);
+  border-bottom:1px solid #444;
+}
+
+header h1{
+  color:#f2f2f2;
+  font-size:32px;
+}
+
+header p{
+  margin-top:10px;
+  color:#ccc;
+}
+
+/* CONTEÚDO */
+.container{
+  max-width:900px;
+  margin:auto;
+  padding:40px 20px;
+  text-align:center;
+}
+
+.descricao{
+  margin-bottom:30px;
+  color:#ddd;
+  font-size:16px;
+  line-height:1.6;
+}
+
+/* CERTIFICADOS */
+.certificado{
+  background:rgba(30,30,30,0.9);
+  border-radius:20px;
+  padding:25px;
+  margin-bottom:40px;
+  box-shadow:0 0 15px rgba(0,0,0,.6);
+}
+
+.certificado img{
+  width:100%;
+  max-width:700px;
+  border-radius:12px;
+  margin:15px 0;
+}
+
+.certificado h2{
+  color:#e0e0e0;
+  margin-bottom:15px;
+}
+
+/* BOTÃO */
+.voltar{
+  margin-top:40px;
+}
+
+.voltar a{
+  display:inline-block;
+  padding:12px 30px;
+  background:#555;
+  color:white;
+  text-decoration:none;
+  border-radius:30px;
+  font-weight:bold;
+  transition:.3s;
+}
+
+.voltar a:hover{
+  background:#888;
+  transform:scale(1.05);
+}
+
+/* RODAPÉ */
+footer{
+  text-align:center;
+  padding:20px;
+  background:rgba(20,20,20,0.9);
+  border-top:1px solid #444;
+  margin-top:40px;
+  color:#aaa;
+}
+
+/* RESPONSIVO */
+@media(max-width:600px){
+  header h1{
+    font-size:26px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Certificado em HTML e CSS</h1>
+  <p>Formação em Desenvolvimento Web</p>
+</header>
+
+<div class="container">
+
+  <p class="descricao">
+    Este certificado representa minha formação em HTML e CSS, onde desenvolvi habilidades fundamentais
+    para criação de sites modernos, responsivos e visualmente organizados. Durante o curso, aprendi a
+    estruturar páginas web, aplicar estilos profissionais e desenvolver layouts adaptáveis para diferentes dispositivos.
+  </p>
+
+  <div class="certificado">
+    <h2>Certificado - Parte 1</h2>
+    <img src="https://i.imgur.com/4Ncl9eD.jpeg" alt="Certificado HTML e CSS Parte 1">
+  </div>
+
+  <div class="certificado">
+    <h2>Certificado - Parte 2</h2>
+    <img src="https://i.imgur.com/DxjcEc2.jpeg" alt="Certificado HTML e CSS Parte 2">
+  </div>
+
+  <div class="voltar">
+<a href="portf.html"> ⬅ Voltar ao Portfólio</a>
+  </div>
+
+</div>
+
+<footer>
+  <p>© 2026 Gustavo Sales - Todos os direitos reservados</p>
+</footer>
+
+</body>
+</html>
