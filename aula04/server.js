@@ -1,92 +1,78 @@
 const express = require("express");
-const mysql = require("mysql2/promise");
+const mysql = require("mysql2");
 const cors = require("cors");
 
 const app = express();
 
-app.use(cors());
+app.use(cors()); // depois, se quiser, eu te ajudo a travar só no domínio do seu site
 app.use(express.json());
 
-/**
- * Railway / Render env vars:
- * - Preferência: DATABASE_URL (se existir)
- * - Alternativa: DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT, DB_SSL
- */
+// ==================== ENV ====================
+// Esperado no Railway:
+// DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT, DB_SSL
 
-const {
-  DATABASE_URL,
-  DB_HOST,
-  DB_USER,
-  DB_PASSWORD,
-  DB_NAME,
-  DB_PORT,
-  DB_SSL,
-  NODE_ENV,
-} = process.env;
+const DB_HOST = process.env.DB_HOST;
+const DB_USER = process.env.DB_USER;
+const DB_PASSWORD = process.env.DB_PASSWORD;
+const DB_NAME = process.env.DB_NAME;
+const DB_PORT = Number(process.env.DB_PORT || 3306);
 
-let pool = null;
+// Aceita: true / TRUE / 1 / yes / sim / verdadeiro
+function parseBool(v) {
+  if (v === undefined || v === null) return false;
+  return ["true", "1", "yes", "y", "sim", "verdadeiro"].includes(
+    String(v).trim().toLowerCase()
+  );
+}
 
-// Detecta se deve usar SSL
-// Railway normalmente precisa SSL quando conecta via host público/proxy.
-// No internal (mysql.railway.internal) pode funcionar sem SSL, mas deixar habilitado não atrapalha.
-const shouldUseSSL = (() => {
-  // se DB_SSL foi definido, respeita
-  if (typeof DB_SSL !== "undefined") {
-    return String(DB_SSL).toLowerCase() === "true";
+const useSSL = parseBool(process.env.DB_SSL);
+
+let pool;
+
+// ==================== MYSQL (POOL) ====================
+async function initDB() {
+  if (!DB_HOST || !DB_USER || !DB_PASSWORD || !DB_NAME) {
+    console.warn("⚠️ MySQL não configurado. Verifique as Variables do Railway.");
+    return;
   }
 
-  // se estiver em produção, assume SSL
-  if (NODE_ENV === "production") return true;
+  pool = mysql
+    .createPool({
+      host: DB_HOST,
+      user: DB_USER,
+      password: DB_PASSWORD,
+      database: DB_NAME,
+      port: DB_PORT,
+      waitForConnections: true,
+      connectionLimit: 10,
+      queueLimit: 0,
+      // SSL somente se DB_SSL estiver true/verdadeiro
+      ssl: useSSL ? { rejectUnauthorized: false } : undefined,
+    })
+    .promise();
 
-  // se tiver DATABASE_URL (railway), assume SSL
-  if (DATABASE_URL) return true;
-
-  return false;
-})();
-
-async function initDB() {
   try {
-    if (DATABASE_URL) {
-      // Usando URL completa (melhor opção no Railway se disponível)
-      pool = mysql.createPool({
-        uri: DATABASE_URL,
-        waitForConnections: true,
-        connectionLimit: 10,
-        queueLimit: 0,
-        ssl: shouldUseSSL ? { rejectUnauthorized: false } : undefined,
-      });
-    } else if (DB_HOST && DB_USER && DB_PASSWORD && DB_NAME) {
-      // Usando variáveis separadas
-      pool = mysql.createPool({
-        host: DB_HOST,
-        user: DB_USER,
-        password: DB_PASSWORD,
-        database: DB_NAME,
-        port: Number(DB_PORT || 3306),
-        waitForConnections: true,
-        connectionLimit: 10,
-        queueLimit: 0,
-        ssl: shouldUseSSL ? { rejectUnauthorized: false } : undefined,
-      });
-    } else {
-      console.warn("⚠️ Banco NÃO configurado: defina DATABASE_URL ou DB_* no ambiente.");
-      return;
-    }
+    await pool.query("SELECT 1");
+    console.log("✅ Conectado ao MySQL!");
 
-    // Teste de conexão
-    const conn = await pool.getConnection();
-    await conn.query("SELECT 1");
-    conn.release();
+    // Cria a tabela automaticamente se não existir
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS contatos (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        nome VARCHAR(255) NOT NULL,
+        email VARCHAR(255) NOT NULL,
+        mensagem TEXT NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+    `);
 
-    console.log("✅ Conectado ao MySQL (pool)!");
-    console.log("🔒 SSL:", shouldUseSSL ? "ON" : "OFF");
+    console.log("✅ Tabela 'contatos' pronta!");
   } catch (err) {
     console.error("❌ Erro ao conectar no MySQL:", err.message);
     pool = null;
   }
 }
 
-// Inicializa DB ao subir
 initDB();
 
 // ==================== ROTAS ====================
@@ -103,12 +89,14 @@ app.post("/contato", async (req, res) => {
   }
 
   if (!pool) {
-    return res.status(500).json({ mensagem: "Banco ainda não configurado/conectado." });
+    return res.status(500).json({
+      mensagem: "Banco ainda não conectado. Verifique as variáveis do Railway.",
+    });
   }
 
   try {
     const sql = "INSERT INTO contatos (nome, email, mensagem) VALUES (?, ?, ?)";
-    await pool.execute(sql, [nome, email, mensagem]);
+    await pool.query(sql, [nome, email, mensagem]);
 
     return res.json({ mensagem: "Mensagem enviada com sucesso!" });
   } catch (err) {

@@ -173,6 +173,11 @@
       background: #00ccaa;
     }
 
+    form button:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+    }
+
     footer {
       margin-top: auto;
       background: rgba(10, 10, 10, 0.95);
@@ -254,12 +259,11 @@
         <a href="https://www.instagram.com/gustavo_____salles" target="_blank"><i class="fab fa-instagram"></i></a>
       </div>
 
-      <!-- FORMULÁRIO DE CADASTRO / CONTATO -->
       <form id="formContato">
         <input type="text" id="nome" name="nome" placeholder="Seu nome" required>
         <input type="email" id="email" name="email" placeholder="Seu email" required>
-        <textarea id="mensagem" name="mensagem" placeholder="Deixe sua mensagem" rows="3"></textarea>
-        <button type="submit">Enviar</button>
+        <textarea id="mensagem" name="mensagem" placeholder="Deixe sua mensagem" rows="3" required></textarea>
+        <button id="btnEnviar" type="submit">Enviar</button>
       </form>
 
     </div>
@@ -292,31 +296,53 @@
       });
     }, 1000);
 
-document.getElementById("formContato").addEventListener("submit", function(e) {
-    e.preventDefault();
+    const form = document.getElementById("formContato");
+    const btn = document.getElementById("btnEnviar");
 
-    const nome = document.getElementById("nome").value;
-    const email = document.getElementById("email").value;
-    const mensagem = document.getElementById("mensagem").value;
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
 
-    fetch("https://meuportfolio-production-0b48.up.railway.app/contato", {
-        method: "POST",
-        headers: {
+      const nome = document.getElementById("nome").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const mensagem = document.getElementById("mensagem").value.trim();
+
+      if (!nome || !email || !mensagem) {
+        alert("Preencha todos os campos!");
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = "Enviando...";
+
+      try {
+        const res = await fetch("https://meuportfolio-production-0b48.up.railway.app/contato", {
+          method: "POST",
+          headers: {
             "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ nome, email, mensagem })
-    })
-    .then(res => res.json())
-    .then(data => {
-        alert(data.mensagem);
-    })
-    .catch(err => {
-        console.error("Erro:", err);
-        alert("Erro ao enviar mensagem.");
-    });
-});
+          },
+          body: JSON.stringify({ nome, email, mensagem })
+        });
 
-</script>
+        const contentType = res.headers.get("content-type") || "";
+        const payload = contentType.includes("application/json")
+          ? await res.json()
+          : { mensagem: await res.text() };
+
+        if (!res.ok) {
+          throw new Error(payload.mensagem || "Erro ao enviar mensagem.");
+        }
+
+        alert(payload.mensagem || "Mensagem enviada!");
+        form.reset();
+      } catch (err) {
+        console.error("Erro:", err);
+        alert(err.message || "Erro ao enviar mensagem.");
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "Enviar";
+      }
+    });
+  </script>
 
 </body>
 </html>
