@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Sobre - Gustavo Sales</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: Arial, sans-serif;
+}
+
+body{
+  background-image:url("https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1920&q=80");
+  background-size:cover;
+  background-position:50% 5%;
+  background-attachment:fixed;
+  min-height:100vh;
+  color:white;
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.75);
+  z-index:-1;
+}
+
+header{
+  text-align:center;
+  padding:30px 20px;
+  background:rgba(20,20,20,0.9);
+  border-bottom:1px solid #444;
+}
+
+header h1{
+  color:#f2f2f2;
+  font-size:32px;
+}
+
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:50px 20px;
+}
+
+.sobre-card{
+  display:flex;
+  gap:40px;
+  background:rgba(30,30,30,0.95);
+  border-radius:20px;
+  padding:30px;
+  box-shadow:0 0 20px rgba(0,0,0,.6);
+  opacity:0;
+  transform:translateY(40px);
+  transition:1s;
+}
+
+.sobre-card.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+.sobre-card img{
+  width:320px;
+  border-radius:15px;
+  object-fit:cover;
+}
+
+.sobre-texto h2{
+  color:#eaeaea;
+  margin-bottom:15px;
+}
+
+.sobre-texto p{
+  color:#ccc;
+  line-height:1.6;
+  margin-bottom:15px;
+  font-size:15px;
+}
+
+.voltar{
+  text-align:center;
+  margin-top:40px;
+}
+
+.voltar a{
+  display:inline-block;
+  padding:12px 30px;
+  background:#555;
+  color:white;
+  text-decoration:none;
+  border-radius:30px;
+  font-weight:bold;
+  transition:.3s;
+}
+
+.voltar a:hover{
+  background:#888;
+  transform:scale(1.05);
+}
+
+@media(max-width:900px){
+  .sobre-card{
+    flex-direction:column;
+    text-align:center;
+  }
+
+  .sobre-card img{
+    width:100%;
+    max-width:300px;
+    margin:auto;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Sobre Mim</h1>
+</header>
+
+<div class="container">
+
+  <div class="sobre-card reveal">
+
+    <img src="https://i.imgur.com/uNl6YNa.jpeg" alt="Foto Gustavo">
+
+    <div class="sobre-texto">
+      <h2>Minha trajetória profissional</h2>
+
+      <p>
+        Atualmente atuo na área de manutenção de máquinas de grande formato no setor gráfico, função que conquistei
+        por meio da minha formação técnica em Mecatrônica. Essa experiência me proporcionou uma forte base em raciocínio
+        lógico, resolução de problemas e contato direto com tecnologia, automação e sistemas industriais.
+      </p>
+
+      <p>
+        Com o passar do tempo, desenvolvi um grande interesse pela área de tecnologia da informação e programação,
+        o que me motivou a iniciar a graduação em Análise e Desenvolvimento de Sistemas (ADS). Desde então, venho me
+        dedicando continuamente ao estudo de HTML, CSS, JavaScript e conceitos voltados ao desenvolvimento Front-end
+        e Full Stack.
+      </p>
+
+      <p>
+        Tenho facilidade para aprender novas tecnologias, gosto de desafios e busco sempre evoluir tanto no aspecto
+        técnico quanto profissional. Me considero uma pessoa organizada, comprometida e com grande interesse em
+        desenvolver soluções que sejam úteis, eficientes e visualmente agradáveis ao usuário.
+      </p>
+
+      <p>
+        Durante meus estudos, venho criando projetos próprios para aplicar na prática os conhecimentos adquiridos,
+        trabalhando com estruturação de páginas, estilização, responsividade e interação com JavaScript. Cada projeto
+        representa um passo importante na minha evolução como desenvolvedor.
+      </p>
+
+      <p>
+        Meu principal objetivo profissional é atuar como desenvolvedor Full Stack, unindo minha experiência técnica
+        com máquinas e automação à programação, criando sistemas modernos, organizados e inteligentes que possam
+        facilitar processos e melhorar a experiência dos usuários.
+      </p>
+
+      <p>
+        Busco uma oportunidade na área de desenvolvimento de sistemas onde eu possa aprender continuamente, contribuir
+        com a equipe, crescer profissionalmente e colocar em prática meus conhecimentos em projetos reais, agregando
+        valor à empresa e ao usuário final.
+      </p>
+    </div>
+
+  </div>
+
+ <div class="voltar">
+  <a href ="portf.html" >⬅ Voltar ao Portfólio</a>
+</div>
+
+</div>
+
+<script>
+const reveals = document.querySelectorAll('.reveal');
+window.addEventListener('scroll', () => {
+  reveals.forEach(el => {
+    const top = el.getBoundingClientRect().top;
+    if(top < window.innerHeight - 100){
+      el.classList.add('show');
+    }
+  });
+});
+
+/* INCLUSÃO: aparece automaticamente após 2 segundos mesmo sem scroll */
+setTimeout(() => {
+  reveals.forEach(el => {
+    el.classList.add('show');
+  });
+}, 2000);
+</script>
+
+</body>
+</html>

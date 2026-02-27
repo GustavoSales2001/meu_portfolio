@@ -292,28 +292,31 @@
       });
     }, 1000);
 
-    document.getElementById("formContato").addEventListener("submit", function(e) {
-      e.preventDefault();
+document.getElementById("formContato").addEventListener("submit", function(e) {
+    e.preventDefault();
 
-      const nome = document.getElementById("nome").value;
-      const email = document.getElementById("email").value;
-      const mensagem = document.getElementById("mensagem").value;
+    const nome = document.getElementById("nome").value;
+    const email = document.getElementById("email").value;
+    const mensagem = document.getElementById("mensagem").value;
 
-     fetch("https://seu-backend.onrender.com/contato", {
+    fetch("https://meuportfolio-production-0b48.up.railway.app/contato", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+            "Content-Type": "application/json"
         },
         body: JSON.stringify({ nome, email, mensagem })
-      })
-      .then(res => res.json())
-      .then(data => {
+    })
+    .then(res => res.json())
+    .then(data => {
         alert(data.mensagem);
-        document.getElementById("formContato").reset();
-      })
-      .catch(err => console.log(err));
+    })
+    .catch(err => {
+        console.error("Erro:", err);
+        alert("Erro ao enviar mensagem.");
     });
-  </script>
+});
+
+</script>
 
 </body>
 </html>

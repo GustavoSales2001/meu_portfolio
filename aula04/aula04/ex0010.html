@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Box</title>
+</head>
+
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Eventos JS</title>
+
+<style>
+#box{
+  width:200px;
+  height:200px;
+  background-color: aquamarine;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-family: Arial;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div id="box">Passe o mouse</div>
+
+<script>
+let box = document.getElementById("box")
+
+box.addEventListener("click", clicar)
+box.addEventListener("dblclick", duplo)
+box.addEventListener("mouseenter", entrar)
+box.addEventListener("mouseout", sair)
+
+function clicar(){
+  box.innerText = "Clique!"
+  box.style.background = "red"
+}
+
+function duplo(){
+  box.innerText = "Duplo clique!"
+  box.style.background = "purple"
+}
+
+function entrar(){
+  box.innerText = "Entrou!"
+  box.style.background = "green"
+}
+
+function sair(){
+  box.innerText = "Saiu!"
+  box.style.background = "blue"
+}
+</script>
+
+</body>
+</html>

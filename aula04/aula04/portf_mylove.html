@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aguiar Studio | Portfólio</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+
+<!-- AOS (animações ao rolar) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+
+<style>
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+ .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    @media (max-width: 768px) {
+    .container {
+          padding: 8px;
+      }
+    }
+
+/* TIPOGRAFIA */
+body {
+  font-family: 'Lato', sans-serif;
+  color: #333;
+  background: #899f7e;
+  padding-top: 70px;
+}
+h1, h2, h3, h4 {
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* MENU RESPONSIVO */
+nav {
+  position: fixed;
+  top:0; left:0; right:0;
+  background: rgba(255,255,255,0.95);
+  padding: 10px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #7fa06c;
+  backdrop-filter: blur(5px);
+  z-index: 200;
+}
+nav h2 {
+  font-size: 24px;
+  color: #4b5e3e;
+  font-weight: 700;
+}
+.menu-links a {
+  margin-left: 18px;
+  text-decoration: none;
+  color: #444;
+  font-size: 16px;
+  font-weight: 600;
+  transition: 0.3s;
+}
+.menu-links a:hover {
+  color: #4b5e3e;
+}
+.hamburger {
+  display: none;
+  font-size: 26px;
+  cursor: pointer;
+}
+@media(max-width:768px) {
+  .menu-links {
+    display: none;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .hamburger {
+    display: block;
+  }
+}
+
+/* HEADER */
+header {
+  text-align: center;
+  padding: 60px 10px;
+}
+header h1 {
+  font-size: 36px;
+  color: #4b5e3e;
+  font-weight: 700;
+}
+header p {
+  font-size: 18px;
+  font-weight: 400;
+}
+
+/* FILTROS */
+.filtros {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 20px;
+}
+.filtros button {
+  padding: 8px 14px;
+  background: #6f8a6a;
+  border: none;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.filtros button:hover {
+  background: #4b5e3e;
+}
+
+/* GALERIA */
+.gallery {
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr 1fr;
+  gap: 18px;
+  padding: 24px 30px;
+}
+.card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 8px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  cursor: pointer;
+  transition: 0.3s;
+}
+.card:hover {
+  transform: scale(1.04);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+.card img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+}
+.card p {
+  margin-top: 8px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* MODAL */
+.modal {
+  display: none;
+  position: fixed;
+  top:0; left:0; right:0; bottom:0;
+  background: rgba(0,0,0,0.65);
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  z-index: 300;
+}
+.modal-content {
+  background: #fff;
+  border-radius: 14px;
+  padding: 18px;
+  max-width: 600px;
+  width: 90%;
+  text-align: center;
+  animation: fadeIn 0.3s ease;
+}
+.modal-content img {
+  width: 280px;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+.modal-content h3 {
+  margin-top: 12px;
+  font-size: 20px;
+  color: #4b5e3e;
+  font-weight: 700;
+}
+.modal-content p {
+  margin-top: 8px;
+  font-size: 16px;
+  font-weight: 400;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* SOBRE */
+.sobre-secao {
+  padding: 40px 30px;
+  background: #fdfdfd;
+  text-align: center;
+}
+.sobre-secao h2 {
+  font-size: 28px;
+  font-weight: 600;
+  color: #4b5e3e;
+}
+.sobre-secao p {
+  font-size: 17px;
+  font-weight: 300;
+  margin-top: 8px;
+}
+
+/* SERVIÇOS */
+.servicos-secao {
+  padding: 40px 30px;
+  background: #fff;
+  text-align: center;
+}
+.servicos-secao h2 {
+  font-size: 28px;
+  font-weight: 600;
+  color: #4b5e3e;
+}
+.servicos-grid {
+  display: grid;
+  gap: 18px;
+  padding-top: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+.servico-box {
+  border: 2px solid #e3e3e3;
+  padding: 18px;
+}
+.servico-box h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #4b5e3e;
+}
+.servico-box p {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+/* DEPOIMENTOS */
+.depoimentos {
+  background: #f9f9f9;
+  padding: 40px 30px;
+  text-align: center;
+}
+.depoimentos h2 {
+  font-size: 28px;
+  font-weight: 600;
+  color: #4b5e3e;
+}
+.depoimento-item p {
+  font-size: 16px;
+  font-style: italic;
+  font-weight: 300;
+  margin-top: 8px;
+}
+.depoimento-item span {
+  display: block;
+  font-size: 15px;
+  font-weight: 400;
+  padding-top: 4px;
+  color: #666;
+}
+
+/* RODAPÉ */
+.rodape {
+  text-align: center;
+  padding: 18px;
+  background: #4b5e3e;
+  color: white;
+  font-size: 15px;
+}
+
+
+/* BOTÕES CONTATO */
+.contact-btns {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.contact-btns a {
+  width: 54px;
+  height: 54px;
+  background: #4b5e3e;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  text-decoration: none;
+  transition: 0.3s ease;
+}
+.contact-btns a:hover {
+  background: #6f8a6a;
+}
+</style>
+</head>
+
+<body>
+
+<!-- MENU -->
+<nav>
+  <h2>Aguiar Studio</h2>
+  <div class="menu-links">
+    <a href="#portfolio">Portfólio</a>
+    <a href="#sobre">Sobre</a>
+    <a href="#servicos">Serviços</a>
+    <a href="#contato">Contato</a>
+  </div>
+  <div class="hamburger" onclick="toggleMenu()">☰</div>
+</nav>
+
+<div class="container"></div>
+
+<!-- HEADER -->
+<header id="portfolio" data-aos="fade-down">
+  <h1>Portfólio</h1>
+  <p>Veja alguns dos meus trabalhos</p>
+</header>
+
+<!-- FILTROS -->
+<div class="filtros" data-aos="fade-up">
+  <button onclick="filtrar('todos')">Todos</button>
+  <button onclick="filtrar('branding')">Branding</button>
+  <button onclick="filtrar('fotografia')">Fotografia</button>
+  <button onclick="filtrar('ilustracao')">Ilustração</button>
+</div>
+
+<!-- GALERIA -->
+<div class="gallery" id="gallery"></div>
+
+<!-- MODAL DE DETALHE -->
+<div class="modal" id="modalDetalhe" onclick="fecharDetalhe()">
+  <div class="modal-content" onclick="event.stopPropagation()">
+    <img id="modalImg">
+    <h3 id="modalTitulo"></h3>
+    <p id="modalTexto"></p>
+  </div>
+</div>
+
+<!-- SOBRE -->
+<section id="sobre" class="sobre-secao" data-aos="fade-up">
+  <h2>Sobre Mim</h2>
+  <p>Sou uma profissional dedicada ao design e à estética visual que conecta emoção e estilo.</p>
+</section>
+
+<!-- SERVIÇOS -->
+<section id="servicos" class="servicos-secao" data-aos="fade-up">
+  <h2>Serviços</h2>
+  <div class="servicos-grid">
+    <div class="servico-box">
+      <h3>Branding</h3>
+      <p>Identidade visual com propósito e sensibilidade.</p>
+    </div>
+    <div class="servico-box">
+      <h3>Fotografia</h3>
+      <p>Imagens pensadas para transmitir sentimento.</p>
+    </div>
+    <div class="servico-box">
+      <h3>Design Gráfico</h3>
+      <p>Projetos visuais completos e harmoniosos.</p>
+    </div>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section class="depoimentos" data-aos="fade-up">
+  <h2>Depoimentos</h2>
+  <div class="depoimento-item">
+    <p>"Trabalhar com você foi ótimo, adorei o resultado."</p>
+    <span>- Cliente A</span>
+  </div>
+  <div class="depoimento-item">
+    <p>"Excelente profissional, recomendo."</p>
+    <span>- Cliente B</span>
+  </div>
+</section>
+
+<!-- BOTÕES DE CONTATO -->
+<div class="contact-btns" id="contato">
+  <a href="https://instagram.com/https://www.instagram.com/aguiar.sttudio?igsh=dmxzdGJwMDZmc2Vw" target="_blank" title="Instagram">📸</a>
+  <a href="https://wa.me/5511922198639?text=Olá!%20Vi%20seu%20portfólio%20e%20gostaria%20de%20saber%20mais" title="WhatsApp">💬</a>
+  <a href="mailto:barrosmilene965@gmail.com?subject=Contato%20do%20Site&body=Olá!%20Quero%20saber%20mais">✉️</a>
+</div>
+
+<!-- RODAPÉ -->
+<footer class="rodape">
+  <p>© 2026 Aguiar Studio • Todos os direitos reservados</p>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+<script>
+// MENU HAMBÚRGUER
+function toggleMenu() {
+  const links = document.querySelector('.menu-links');
+  if (links.style.display === 'flex') links.style.display = 'none';
+  else links.style.display = 'flex';
+}
+
+// GALERIA COM CATEGORIAS
+const imagens = [
+  {src:"https://i.imgur.com/HxRlOHB.jpg", categoria:"branding", titulo:"Branding delicado", texto:"Projeto com cores suaves e estilo delicado."},
+  {src:"https://i.imgur.com/rzoSzbw.jpg", categoria:"fotografia", titulo:"Foto natural", texto:"Foto com luz natural e atmosfera leve."},
+  {src:"https://i.imgur.com/ixo2p8p.jpg", categoria:"ilustracao", titulo:"Editorial criativo", texto:"Editorial com estética criativa e fluida."},
+  {src:"https://i.imgur.com/JeGOPRw.jpg", categoria:"branding", titulo:"Projeto de Marca", texto:"Design de marca com identidade forte."},
+  {src:"https://i.imgur.com/WkHFVAN.jpg", categoria:"fotografia", titulo:"Foto editorial", texto:"Editorial com composição equilibrada."},
+  {src:"https://i.imgur.com/u753UfH.jpg", categoria:"ilustracao", titulo:"Ilustração orgânica", texto:"Ilustração com formas suaves."},
+  {src:"https://i.imgur.com/j7Y5xSq.jpg", categoria:"branding", titulo:"Campanha visual", texto:"Campanha visual harmônica e expressiva."}
+];
+
+const gallery = document.getElementById("gallery");
+
+function mostrarGaleria(lista) {
+  gallery.innerHTML = "";
+  lista.forEach(item => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.setAttribute("data-categoria", item.categoria);
+
+    const img = document.createElement("img");
+    img.src = item.src;
+    img.onclick = () => abrirDetalhe(item);
+
+    const caption = document.createElement("p");
+    caption.innerText = item.titulo;
+
+    card.appendChild(img);
+    card.appendChild(caption);
+    gallery.appendChild(card);
+  });
+}
+
+function filtrar(cat) {
+  if (cat === "todos") mostrarGaleria(imagens);
+  else mostrarGaleria(imagens.filter(i => i.categoria === cat));
+}
+
+mostrarGaleria(imagens);
+
+function abrirDetalhe(item) {
+  document.getElementById("modalDetalhe").style.display = "flex";
+  document.getElementById("modalImg").src = item.src;
+  document.getElementById("modalTitulo").innerText = item.titulo;
+  document.getElementById("modalTexto").innerText = item.texto;
+}
+
+function fecharDetalhe() {
+  document.getElementById("modalDetalhe").style.display = "none";
+}
+
+// Inicializa animações AOS
+AOS.init({
+  duration: 800,
+  once: true
+});
+</script>
+
+</body>
+</html>

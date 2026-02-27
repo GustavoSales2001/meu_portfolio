@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Certificados</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #f6f3ee;
+  color: #333;
+}
+
+/* HEADER CLEAN */
+header {
+  background: #ffffff;
+  padding: 50px 20px 30px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+.logo-circle {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 4px solid #8A997E;
+  object-fit: cover;
+  background: #fff;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+}
+
+.header-title {
+  margin-top: 20px;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: bold;
+  color: #8A997E;
+}
+
+/* NAV MODERNO */
+nav {
+  background: #ffffff;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  padding: 14px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+}
+
+nav a {
+  color: #8A997E;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 10px 18px;
+  border-radius: 25px;
+  transition: all 0.3s ease;
+}
+
+nav a:hover {
+  background: #8A997E;
+  color: white;
+}
+
+/* SECTION */
+section {
+  max-width: 1100px;
+  margin: auto;
+  padding: 60px 15px;
+}
+
+/* CERTIFICADO */
+.certificado {
+  background: #ffffff;
+  padding: 30px;
+  margin-bottom: 50px;
+  border-radius: 20px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease;
+}
+
+.certificado.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.certificado img {
+  width: 100%;
+  max-width: 650px;
+  display: block;
+  margin: 0 auto 25px;
+  border-radius: 18px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+}
+
+.certificado h3 {
+  color: #8A997E;
+  margin-bottom: 15px;
+  text-align: center;
+  font-size: 1.6rem;
+}
+
+.certificado ul {
+  padding-left: 18px;
+  max-width: 750px;
+  margin: auto;
+}
+
+.certificado li {
+  margin-bottom: 10px;
+  line-height: 1.6;
+}
+
+/* FOOTER */
+footer {
+  background: #8A997E;
+  color: #eee;
+  text-align: center;
+  padding: 20px;
+}
+
+/* BOTÕES */
+.float-buttons {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 100;
+}
+
+.float-btn {
+  background: #25D366;
+  color: white;
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.float-btn.instagram {
+  background: #E1306C;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .logo-circle {
+    width: 110px;
+    height: 110px;
+  }
+
+  .header-title {
+    font-size: 1.8rem;
+  }
+
+  nav {
+    flex-wrap: wrap;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <img src="logo.png" alt="Logo" class="logo-circle">
+  <div class="header-title">Certificados</div>
+</header>
+
+<nav>
+  <a href="#design">Design</a>
+  <a href="#lash">Lash Lifting</a>
+  <a href="#derma">Dermaplaning</a>
+</nav>
+
+<section id="design" class="certificado">
+  <img src="https://i.imgur.com/Xv2xDr9.jpg">
+  <h3>Design de Sobrancelhas</h3>
+  <ul>
+    <li>✔ Formação completa em design e visagismo facial</li>
+    <li>✔ Técnicas modernas de harmonização</li>
+    <li>✔ Atendimento personalizado</li>
+    <li>✔ Biossegurança e higiene</li>
+    <li>✔ Preparação para o mercado profissional</li>
+  </ul>
+</section>
+
+<section id="lash" class="certificado">
+  <img src="https://i.imgur.com/9258kqa.jpg">
+  <h3>Lash Lifting</h3>
+  <ul>
+    <li>✔ Curvatura e fortalecimento dos cílios naturais</li>
+    <li>✔ Procedimento sem extensões</li>
+    <li>✔ Efeito natural</li>
+    <li>✔ Indicado para diferentes tipos de fios</li>
+    <li>✔ Atualização profissional</li>
+  </ul>
+</section>
+
+<section id="derma" class="certificado">
+  <img src="https://i.imgur.com/p6tbERf.jpg">
+  <h3>Dermaplaning</h3>
+  <ul>
+    <li>✔ Remoção de células mortas</li>
+    <li>✔ Renovação da pele</li>
+    <li>✔ Pele mais lisa e iluminada</li>
+    <li>✔ Técnica segura</li>
+    <li>✔ Procedimento não invasivo</li>
+  </ul>
+</section>
+
+<footer>
+<p>© 2026 Olhar Perfeito — Todos os direitos reservados</p>
+</footer>
+
+<div class="float-buttons">
+  <a class="float-btn" onclick="openWhatsApp()"><i class="fab fa-whatsapp"></i></a>
+  <a class="float-btn instagram" href="https://www.instagram.com/rosani.balbi" target="_blank"><i class="fab fa-instagram"></i></a>
+</div>
+
+<script>
+function openWhatsApp() {
+  const url = `https://wa.me/5511956841148?text=${encodeURIComponent("Olá! Gostaria de saber mais sobre seus certificados.")}`;
+  window.open(url, "_blank");
+}
+
+/* ANIMAÇÃO AO ROLAR */
+const elementos = document.querySelectorAll('.certificado');
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('show');
+    }
+  });
+}, { threshold: 0.2 });
+
+elementos.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

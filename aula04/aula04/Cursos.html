@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Realçando sua beleza</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"> 
+
+<style>
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #f6f3ee;
+  color: #333;
+}
+
+section { 
+  scroll-margin-top: 90px; 
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease;
+}
+
+section.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* HEADER */
+header {
+  position: relative;
+  background-image:
+    linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
+    url("https://i.imgur.com/waQRoHX.jpeg");
+  background-size: cover;
+  background-position: center;
+  min-height: 50vh;
+  padding: 40px 20px 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.header-title {
+  position: absolute;
+  bottom: 95px;
+  left: 180px;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: bold;
+  text-shadow: 0 3px 8px rgba(0,0,0,0.6);
+}
+
+.logo-circle {
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  border: 4px solid #8A997E;
+  background-color: white;
+  object-fit: cover;
+}
+
+/* NAV */
+nav {
+  background: #ffffff;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 12px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+nav a {
+  color: #8A997E;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 10px 16px;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+nav a:hover { background: #9EAD93; color:white; }
+
+/* SECTIONS */
+section {
+  padding: 50px 15px;
+  max-width: 1100px;
+  margin: auto;
+}
+
+/* CARDS */
+.card {
+  background: #ffffff;
+  padding: 22px;
+  margin: 20px 0;
+  border-radius: 18px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  cursor: pointer;
+}
+
+.card strong {
+  font-size: 1.3rem;
+  color: #8A997E;
+}
+
+.card-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+
+.card.active .card-content { 
+  max-height: 1200px; 
+}
+
+/* BOTÕES */
+button.cta, .cert-btn {
+  background: linear-gradient(135deg, #9EAD93, #8A997E);
+  color: white;
+  border: none;
+  padding: 14px 26px;
+  border-radius: 30px;
+  cursor: pointer;
+  margin-top: 15px;
+  width: 100%;
+}
+
+/* ===== AVALIAÇÕES ===== */
+#avaliacoes {
+  background: linear-gradient(135deg, #8A997E, #9EAD93);
+  border-radius: 25px;
+  padding: 60px 15px;
+  text-align: center;
+  color: white;
+}
+
+.slider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.review-card {
+  background: white;
+  color: #333;
+  max-width: 550px;
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  transition: transform 0.6s ease, opacity 0.6s ease;
+}
+
+.stars { color: gold; font-size:22px; }
+
+.prev, .next {
+  background:white;
+  border:none;
+  border-radius:50%;
+  width:42px;
+  height:42px;
+  font-size:20px;
+  cursor:pointer;
+}
+
+/* MAPA */
+.map-box {
+  background: white;
+  padding: 20px;  
+  border-radius: 18px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  margin-top: 30px;
+}
+
+.map-box iframe {
+  width: 100%;
+  height: 350px;
+  border-radius: 15px;
+}
+
+/* FOOTER */
+footer {
+  background: #8A997E;
+  color: #eee;
+  text-align: center;
+  padding: 20px;
+}
+
+/* FLOAT */
+.float-buttons {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.float-btn {
+  background: #25D366;
+  color: white;
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.float-btn.instagram { background:#E1306C; }
+</style>
+</head>
+
+<body>
+
+<header>
+  <img src="logo.png" class="logo-circle">
+  <div class="header-title">Realçando sua beleza</div>
+</header>
+
+<nav>
+  <a href="#sobre">Sobre</a>
+  <a href="#design" onclick="openCardFromMenu(event,'design')">Design</a>
+  <a href="#lash" onclick="openCardFromMenu(event,'lash')">Lash Lifting</a>
+  <a href="#brown" onclick="openCardFromMenu(event,'brown')">Brown Lamination</a>
+  <a href="#derma" onclick="openCardFromMenu(event,'derma')">Dermaplaning</a>
+  <a href="#certificados">Certificados</a>
+  <a href="#avaliacoes">Avaliações</a>
+</nav>
+
+<section id="sobre">
+<h2>Sobre</h2>
+<section id="sobre">
+
+<p>
+Essa idéia nasceu com o propósito de transformar vidas por meio da beleza, da autoestima e da capacitação profissional.
+Somos uma escola especializada na formação de profissionais da área da estética, oferecendo cursos modernos, práticos e alinhados às exigências do mercado atual.
+</p>
+
+<p>
+Acreditamos que cada aluno possui um potencial único e que, com orientação correta, técnica adequada e acompanhamento próximo, é possível construir uma carreira sólida e promissora na área da beleza.
+Por isso, nossos cursos são desenvolvidos para unir teoria e prática, preparando você não apenas para aprender, mas para atuar com segurança e profissionalismo.
+</p>
+
+<p>
+Nossa missão é formar profissionais confiantes, éticos e preparados para oferecer um atendimento de excelência aos seus clientes.
+Trabalhamos com métodos atualizados, ambiente acolhedor e ensino humanizado, valorizando cada etapa do aprendizado.
+</p>
+
+<p>
+Mais do que ensinar técnicas, buscamos inspirar nossos alunos a acreditarem em si mesmos, a empreenderem e a conquistarem independência financeira por meio da estética e do cuidado com a beleza.
+</p>
+</section>
+
+</section>
+
+<section>
+<h3>Por que fazer nossos cursos?</h3>
+<ul>
+<li>✔ Ensino prático e atualizado</li>
+<li>✔ Turmas reduzidas para melhor aprendizado</li>
+<li>✔ Certificação profissional</li>
+<li>✔ Apoio mesmo após o curso</li>
+<li>✔ Mercado em constante crescimento</li>
+</ul>
+</section>
+
+<section>
+<div class="card" id="design" onclick="toggleCard(this)">
+<strong>Design de Sobrancelhas</strong>
+<div class="card-content">
+<p>Curso completo para modelar e harmonizar sobrancelhas.</p>
+<p>Você aprenderá técnicas de visagismo, simetria facial, uso correto de instrumentos e atendimento profissional.</p>
+<p>Ideal para quem deseja iniciar na área da beleza ou se especializar.</p>
+<button class="cta" onclick="openWhatsApp('Design de Sobrancelhas')">Quero me Inscrever</button>
+</div>
+</div>
+
+<div class="card" id="lash" onclick="toggleCard(this)">
+<strong>Lash Lifting</strong>
+<div class="card-content">
+<p>Técnica que curva e realça os cílios naturais.</p>
+<p>Inclui biossegurança, prática em modelos reais e protocolos profissionais.</p>
+<p>Resultado natural e duradouro para suas clientes.</p>
+<button class="cta" onclick="openWhatsApp('Lash Lifting')">Quero me Inscrever</button>
+</div>
+</div>
+
+<div class="card" id="brown" onclick="toggleCard(this)">
+<strong>Brown Lamination</strong>
+<div class="card-content">
+<p>Alinhamento e definição dos fios.</p>
+<p>Curso completo com teoria e prática supervisionada.</p>
+<p>Perfeito para quem busca diferenciação no mercado.</p>
+<button class="cta" onclick="openWhatsApp('Brown Lamination')">Quero me Inscrever</button>
+</div>
+</div>
+
+<div class="card" id="derma" onclick="toggleCard(this)">
+<strong>Dermaplaning</strong>
+<div class="card-content">
+<p>Pele lisa e renovada.</p>
+<p>Você aprenderá sobre renovação celular, higienização e protocolos seguros.</p>
+<p>Técnica que melhora a textura da pele e a autoestima das clientes.</p>
+<button class="cta" onclick="openWhatsApp('Dermaplaning')">Quero me Inscrever</button>
+</div>
+</div>
+</section>
+
+<section id="certificados">
+<h2>Certificados</h2>
+<p>Veja nossos certificados e qualificações profissionais:</p>
+<a href="https://gustavosales2001.github.io/cert/" target="_blank" class="cert-btn">Ver Certificados</a>
+</section>
+
+<section id="avaliacoes">
+<h2>O que nossas alunas estão falando?</h2>
+<div class="slider">
+<button class="prev">&#10094;</button>
+<div class="review-card" id="review-card">
+<div class="stars">★★★★★</div>
+<p id="review-text"></p>
+<strong id="review-name"></strong>
+</div>
+<button class="next">&#10095;</button>
+</div>
+</section>
+
+<section id="Endereço">
+<h2>Nosso Endereço</h2>
+<p>📍R. Braz Cubas, 251 - 1° andar sala 11<br>
+Centro, Mogi das Cruzes - SP</p>
+
+<div class="map-box">
+<iframe src="https://www.google.com/maps?q=R.%20Braz%20Cubas,%20251,%20Mogi%20das%20Cruzes%20SP&output=embed"></iframe>
+</div>
+</section>
+
+<footer>
+<p>© 2026 Olhar Perfeito — Todos os direitos reservados</p>
+</footer>
+
+<div class="float-buttons">
+<a class="float-btn" onclick="openWhatsApp('Atendimento')"><i class="fab fa-whatsapp"></i></a>
+<a class="float-btn instagram" href="https://www.instagram.com/rosani.balbi" target="_blank"><i class="fab fa-instagram"></i></a>
+</div>
+
+<script>
+function toggleCard(card) {
+  document.querySelectorAll('.card').forEach(c => {
+    if (c !== card) c.classList.remove("active");
+  });
+  card.classList.toggle("active");
+}
+
+function openCardFromMenu(event,id){
+  event.preventDefault();
+  const card = document.getElementById(id);
+  document.querySelectorAll('.card').forEach(c => c.classList.remove("active"));
+  card.classList.add("active");
+  card.scrollIntoView({behavior:"smooth", block:"center"});
+}
+
+function openWhatsApp(curso) {
+  const msg = `Olá! Quero me inscrever no curso de ${curso}.`;
+  window.open(`https://wa.me/5511956841148?text=${encodeURIComponent(msg)}`);
+}
+
+/* SLIDER */
+const reviews = [
+  { text: "Curso maravilhoso! Professora atenciosa e didática incrível.", name: "Maria A" },
+  { text: "Ambiente acolhedor e profissional. Aprendi muito mais do que esperava.", name: "Milene A" },
+  { text: "Me senti segura e preparada para começar a atender minhas clientes.", name: "Julia M" }
+];
+
+let index = 0;
+const reviewText = document.getElementById("review-text");
+const reviewName = document.getElementById("review-name");
+const reviewCard = document.getElementById("review-card");
+
+function showReview(dir="right"){
+  reviewCard.style.opacity=0;
+  reviewCard.style.transform = dir==="right"?"translateX(60px)":"translateX(-60px)";
+  setTimeout(()=>{
+    reviewText.textContent=reviews[index].text;
+    reviewName.textContent=reviews[index].name;
+    reviewCard.style.opacity=1;
+    reviewCard.style.transform="translateX(0)";
+  },400);
+}
+
+document.querySelector(".next").onclick=()=>{
+  index=(index+1)%reviews.length;
+  showReview("right");
+}
+document.querySelector(".prev").onclick=()=>{
+  index=(index-1+reviews.length)%reviews.length;
+  showReview("left");
+}
+
+setInterval(()=>{
+  index=(index+1)%reviews.length;
+  showReview("right");
+},4000);
+
+/* ANIMAÇÃO AO ROLAR */
+const sections = document.querySelectorAll("section");
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add("show");
+    }
+  });
+},{ threshold: 0.2 });
+
+sections.forEach(sec => observer.observe(sec));
+</script>
+
+</body>
+</html>
