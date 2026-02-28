@@ -4,7 +4,7 @@ const cors = require("cors");
 
 const app = express();
 
-app.use(cors()); // depois, se quiser, eu te ajudo a travar só no domínio do seu site
+app.use(cors());
 app.use(express.json());
 
 // ==================== ENV ====================
@@ -46,7 +46,6 @@ async function initDB() {
       waitForConnections: true,
       connectionLimit: 10,
       queueLimit: 0,
-      // SSL somente se DB_SSL estiver true/verdadeiro
       ssl: useSSL ? { rejectUnauthorized: false } : undefined,
     })
     .promise();
@@ -55,7 +54,6 @@ async function initDB() {
     await pool.query("SELECT 1");
     console.log("✅ Conectado ao MySQL!");
 
-    // Cria a tabela automaticamente se não existir
     await pool.query(`
       CREATE TABLE IF NOT EXISTS contatos (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -97,7 +95,6 @@ app.post("/contato", async (req, res) => {
   try {
     const sql = "INSERT INTO contatos (nome, email, mensagem) VALUES (?, ?, ?)";
     await pool.query(sql, [nome, email, mensagem]);
-
     return res.json({ mensagem: "Mensagem enviada com sucesso!" });
   } catch (err) {
     console.error("❌ Erro no INSERT:", err.message);
@@ -105,9 +102,9 @@ app.post("/contato", async (req, res) => {
   }
 });
 
-// ✅ IMPORTANTE: se você tinha app.get("*", ...), isso quebrava no Railway.
-// Use "/*" (ou /.*/). Isso evita o erro do log.
-app.get("/*", (req, res) => {
+// ✅ Catch-all: DEIXA POR ÚLTIMO
+// Use "*" (ou "/(.*)") — NÃO use "/*"
+app.all("*", (req, res) => {
   res.status(404).send("Rota não encontrada.");
 });
 
