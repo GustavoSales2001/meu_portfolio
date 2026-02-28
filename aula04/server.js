@@ -4,36 +4,7 @@ const cors = require("cors");
 
 const app = express();
 
-/**
- * ✅ CORS (IMPORTANTE para GitHub Pages)
- * Coloque aqui o domínio do seu site.
- * Você tem: https://gustavosales2001.github.io/meu_portfolio_site/
- * O origin correto é: https://gustavosales2001.github.io
- */
-const ALLOWED_ORIGINS = [
-  "https://gustavosales2001.github.io",
-  "http://localhost:3000",
-  "http://127.0.0.1:3000",
-];
-
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      // Permite requests sem origin (ex: curl/postman)
-      if (!origin) return callback(null, true);
-
-      if (ALLOWED_ORIGINS.includes(origin)) return callback(null, true);
-
-      return callback(new Error("CORS bloqueado para este origin: " + origin));
-    },
-    methods: ["GET", "POST", "OPTIONS"],
-    allowedHeaders: ["Content-Type"],
-  })
-);
-
-// ✅ Responde o preflight (OPTIONS) — evita erro de CORS no navegador
-app.options("*", cors());
-
+app.use(cors()); // depois, se quiser, eu te ajudo a travar só no domínio do seu site
 app.use(express.json());
 
 // ==================== ENV ====================
@@ -110,17 +81,6 @@ app.get("/", (req, res) => {
   res.status(200).send("Servidor rodando 🚀");
 });
 
-// ✅ rota de saúde pra testar se o banco está conectado (não remove nada, só adiciona)
-app.get("/health", async (req, res) => {
-  try {
-    if (!pool) return res.status(200).json({ ok: true, db: "disconnected" });
-    await pool.query("SELECT 1");
-    return res.status(200).json({ ok: true, db: "connected" });
-  } catch (e) {
-    return res.status(200).json({ ok: true, db: "error" });
-  }
-});
-
 app.post("/contato", async (req, res) => {
   const { nome, email, mensagem } = req.body;
 
@@ -143,6 +103,12 @@ app.post("/contato", async (req, res) => {
     console.error("❌ Erro no INSERT:", err.message);
     return res.status(500).json({ mensagem: "Erro ao salvar no banco" });
   }
+});
+
+// ✅ IMPORTANTE: se você tinha app.get("*", ...), isso quebrava no Railway.
+// Use "/*" (ou /.*/). Isso evita o erro do log.
+app.get("/*", (req, res) => {
+  res.status(404).send("Rota não encontrada.");
 });
 
 // ==================== SERVIDOR ====================
