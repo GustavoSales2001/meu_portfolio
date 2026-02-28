@@ -102,9 +102,9 @@ app.post("/contato", async (req, res) => {
   }
 });
 
-// ✅ Catch-all: DEIXA POR ÚLTIMO
-// Use "*" (ou "/(.*)") — NÃO use "/*"
-app.all("*", (req, res) => {
+// ==================== CATCH ALL ====================
+
+app.use((req, res) => {
   res.status(404).send("Rota não encontrada.");
 });
 
