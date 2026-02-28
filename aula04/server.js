@@ -1,114 +1,348 @@
-const express = require("express");
-const mysql = require("mysql2");
-const cors = require("cors");
+<!DOCTYPE html>
+<html lang="pt-BR">
 
-const app = express();
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfólio - Gustavo Sales</title>
 
-app.use(cors()); // depois, se quiser, eu te ajudo a travar só no domínio do seu site
-app.use(express.json());
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-// ==================== ENV ====================
-// Esperado no Railway:
-// DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT, DB_SSL
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
 
-const DB_HOST = process.env.DB_HOST;
-const DB_USER = process.env.DB_USER;
-const DB_PASSWORD = process.env.DB_PASSWORD;
-const DB_NAME = process.env.DB_NAME;
-const DB_PORT = Number(process.env.DB_PORT || 3306);
+    body {
+      background-image: url("https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1920&q=80");
+      background-size: cover;
+      background-position: 70% 10%;
+      background-attachment: fixed;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
 
-// Aceita: true / TRUE / 1 / yes / sim / verdadeiro
-function parseBool(v) {
-  if (v === undefined || v === null) return false;
-  return ["true", "1", "yes", "y", "sim", "verdadeiro"].includes(
-    String(v).trim().toLowerCase()
-  );
-}
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      z-index: -1;
+    }
 
-const useSSL = parseBool(process.env.DB_SSL);
+    .topo {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 20px 50px;
+    }
 
-let pool;
+    .logo {
+      color: #00ffcc;
+      font-size: 24px;
+      font-weight: bold;
+    }
 
-// ==================== MYSQL (POOL) ====================
-async function initDB() {
-  if (!DB_HOST || !DB_USER || !DB_PASSWORD || !DB_NAME) {
-    console.warn("⚠️ MySQL não configurado. Verifique as Variables do Railway.");
-    return;
-  }
+    .menu {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
 
-  pool = mysql
-    .createPool({
-      host: DB_HOST,
-      user: DB_USER,
-      password: DB_PASSWORD,
-      database: DB_NAME,
-      port: DB_PORT,
-      waitForConnections: true,
-      connectionLimit: 10,
-      queueLimit: 0,
-      // SSL somente se DB_SSL estiver true/verdadeiro
-      ssl: useSSL ? { rejectUnauthorized: false } : undefined,
-    })
-    .promise();
+    .menu a {
+      background: rgba(0, 255, 204, 0.15);
+      border: 2px solid #00ffcc;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 10px 25px;
+      border-radius: 30px;
+      text-align: center;
+      transition: .3s;
+    }
 
-  try {
-    await pool.query("SELECT 1");
-    console.log("✅ Conectado ao MySQL!");
+    .menu a:hover {
+      background: #00ffcc;
+      color: black;
+      transform: scale(1.05);
+    }
 
-    // Cria a tabela automaticamente se não existir
-    await pool.query(`
-      CREATE TABLE IF NOT EXISTS contatos (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        nome VARCHAR(255) NOT NULL,
-        email VARCHAR(255) NOT NULL,
-        mensagem TEXT NOT NULL,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-      );
-    `);
+    .container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding-bottom: 60px;
+    }
 
-    console.log("✅ Tabela 'contatos' pronta!");
-  } catch (err) {
-    console.error("❌ Erro ao conectar no MySQL:", err.message);
-    pool = null;
-  }
-}
+    .card {
+      background: rgba(20, 20, 20, 0.95);
+      border-radius: 25px;
+      padding: 40px 30px;
+      width: 350px;
+      text-align: center;
+      box-shadow: 0 0 30px rgba(0, 255, 200, .3);
+      opacity: 0;
+      transform: translateY(40px);
+      transition: 1s;
+    }
 
-initDB();
+    .card.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
-// ==================== ROTAS ====================
+    .card img {
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      border: 4px solid #00ffcc;
+      object-fit: cover;
+      object-position: 50% 10%;
+    }
 
-app.get("/", (req, res) => {
-  res.status(200).send("Servidor rodando 🚀");
-});
+    .card h1 {
+      color: white;
+      margin-top: 20px;
+      font-size: 26px;
+    }
 
-app.post("/contato", async (req, res) => {
-  const { nome, email, mensagem } = req.body;
+    .card p {
+      color: #ccc;
+      margin-top: 8px;
+      font-size: 14px;
+    }
 
-  if (!nome || !email || !mensagem) {
-    return res.status(400).json({ mensagem: "Preencha todos os campos!" });
-  }
+    .social {
+      margin-top: 25px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
 
-  if (!pool) {
-    return res.status(500).json({
-      mensagem: "Banco ainda não conectado. Verifique as variáveis do Railway.",
+    .social a {
+      width: 42px;
+      height: 42px;
+      border: 1px solid white;
+      border-radius: 50%;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: .3s;
+    }
+
+    .social a:hover {
+      background: #00ffcc;
+      color: black;
+      transform: scale(1.1);
+    }
+
+    form {
+      margin-top: 25px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    form input,
+    form textarea {
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+    }
+
+    form button {
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      background: #00ffcc;
+      font-weight: bold;
+      cursor: pointer;
+      transition: .3s;
+    }
+
+    form button:hover {
+      background: #00ccaa;
+    }
+
+    form button:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+    }
+
+    footer {
+      margin-top: auto;
+      background: rgba(10, 10, 10, 0.95);
+      border-top: 2px solid #00ffcc;
+      padding: 20px;
+      text-align: center;
+      color: #ccc;
+    }
+
+    footer .footer-social {
+      margin: 10px 0;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    footer .footer-social a {
+      color: #00ffcc;
+      font-size: 18px;
+      transition: .3s;
+    }
+
+    footer .footer-social a:hover {
+      color: white;
+      transform: scale(1.2);
+    }
+
+    @media (max-width: 600px) {
+      .topo {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .menu {
+        width: 100%;
+        align-items: center;
+      }
+
+      .menu a {
+        width: 80%;
+      }
+
+      .container {
+        padding: 20px;
+        padding-bottom: 60px;
+      }
+
+      .card {
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="topo">
+    <div class="logo">Gustavo</div>
+
+    <nav class="menu">
+      <a href="https://gustavosales2001.github.io/sobre_mim/">Sobre</a>
+      <a href="https://gustavosales2001.github.io/projetos/">Projetos</a>
+      <a href="https://gustavosales2001.github.io/meus_certificados/">Certificados</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <div class="card reveal">
+
+      <img src="https://i.imgur.com/aS0H0KX.png" alt="Foto Gustavo">
+
+      <h1>Gustavo Sales</h1>
+      <p>Desenvolvedor Front-end & UI/UX</p>
+
+      <div class="social">
+        <a href="https://wa.me/5511933128628" target="_blank"><i class="fab fa-whatsapp"></i></a>
+        <a href="mailto:gustavosalesbarros2001@gmail.com" target="_blank"><i class="fas fa-envelope"></i></a>
+        <a href="https://www.instagram.com/gustavo_____salles" target="_blank"><i class="fab fa-instagram"></i></a>
+      </div>
+
+      <form id="formContato">
+        <input type="text" id="nome" name="nome" placeholder="Seu nome" required>
+        <input type="email" id="email" name="email" placeholder="Seu email" required>
+        <textarea id="mensagem" name="mensagem" placeholder="Deixe sua mensagem" rows="3" required></textarea>
+        <button id="btnEnviar" type="submit">Enviar</button>
+      </form>
+
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2026 Gustavo Sales - Todos os direitos reservados</p>
+
+    <div class="footer-social">
+      <a href="https://www.linkedin.com/in/gustavo-sales-3310a6210" target="_blank"><i class="fab fa-linkedin"></i></a>
+      <a href="https://github.com/GustavoSales2001" target="_blank"><i class="fab fa-github"></i></a>
+    </div>
+  </footer>
+
+  <script>
+    const reveals = document.querySelectorAll('.reveal');
+
+    window.addEventListener('scroll', () => {
+      reveals.forEach(el => {
+        const top = el.getBoundingClientRect().top;
+        if (top < window.innerHeight - 100) {
+          el.classList.add('show');
+        }
+      });
     });
-  }
 
-  try {
-    const sql = "INSERT INTO contatos (nome, email, mensagem) VALUES (?, ?, ?)";
-    await pool.query(sql, [nome, email, mensagem]);
+    setTimeout(() => {
+      reveals.forEach(el => {
+        el.classList.add('show');
+      });
+    }, 1000);
 
-    return res.json({ mensagem: "Mensagem enviada com sucesso!" });
-  } catch (err) {
-    console.error("❌ Erro no INSERT:", err.message);
-    return res.status(500).json({ mensagem: "Erro ao salvar no banco" });
-  }
-});
+    const form = document.getElementById("formContato");
+    const btn = document.getElementById("btnEnviar");
 
-// ==================== SERVIDOR ====================
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
 
-const PORT = Number(process.env.PORT || 3000);
+      const nome = document.getElementById("nome").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const mensagem = document.getElementById("mensagem").value.trim();
 
-app.listen(PORT, () => {
-  console.log(`Servidor rodando na porta ${PORT}`);
-});
+      if (!nome || !email || !mensagem) {
+        alert("Preencha todos os campos!");
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = "Enviando...";
+
+      try {
+        const res = await fetch("https://meuportfolio-production-0b48.up.railway.app/contato", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ nome, email, mensagem })
+        });
+
+        const contentType = res.headers.get("content-type") || "";
+        const payload = contentType.includes("application/json")
+          ? await res.json()
+          : { mensagem: await res.text() };
+
+        if (!res.ok) {
+          throw new Error(payload.mensagem || "Erro ao enviar mensagem.");
+        }
+
+        alert(payload.mensagem || "Mensagem enviada!");
+        form.reset();
+      } catch (err) {
+        console.error("Erro:", err);
+        alert(err.message || "Erro ao enviar mensagem.");
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "Enviar";
+      }
+    });
+  </script>
+
+</body>
+</html>
