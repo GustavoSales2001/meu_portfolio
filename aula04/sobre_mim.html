@@ -5,6 +5,9 @@
 <title>Sobre - Gustavo Sales</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!-- Font Awesome (pra ficar igual ao principal) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 <style>
 *{
   margin:0;
@@ -13,6 +16,8 @@
   font-family: Arial, sans-serif;
 }
 
+:root { color-scheme: dark; }
+
 body{
   background-image:url("https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1920&q=80");
   background-size:cover;
@@ -20,6 +25,8 @@ body{
   background-attachment:fixed;
   min-height:100vh;
   color:white;
+  display:flex;
+  flex-direction:column;
 }
 
 body::before{
@@ -30,24 +37,62 @@ body::before{
   z-index:-1;
 }
 
-header{
-  text-align:center;
-  padding:30px 20px;
-  background:rgba(20,20,20,0.9);
-  border-bottom:1px solid #444;
+/* Acessibilidade */
+.sr-only{
+  position:absolute; width:1px; height:1px;
+  padding:0; margin:-1px; overflow:hidden;
+  clip:rect(0,0,0,0); white-space:nowrap; border:0;
 }
 
-header h1{
-  color:#f2f2f2;
-  font-size:32px;
+/* Header igual ao principal */
+.topo{
+  width:100%;
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  padding:20px 50px;
+  gap:20px;
+}
+
+.logo{
+  color:#00ffcc;
+  font-size:24px;
+  font-weight:bold;
+  letter-spacing:0.5px;
+}
+
+.menu{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.menu a{
+  background: rgba(0, 255, 204, 0.15);
+  border: 2px solid #00ffcc;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 10px 25px;
+  border-radius: 30px;
+  text-align: center;
+  transition: .3s;
+}
+
+.menu a:hover{
+  background:#00ffcc;
+  color:black;
+  transform:scale(1.03);
 }
 
 .container{
   max-width:1100px;
   margin:auto;
-  padding:50px 20px;
+  padding:40px 20px 60px;
+  width:100%;
 }
 
+/* Card */
 .sobre-card{
   display:flex;
   gap:40px;
@@ -57,7 +102,8 @@ header h1{
   box-shadow:0 0 20px rgba(0,0,0,.6);
   opacity:0;
   transform:translateY(40px);
-  transition:1s;
+  transition:900ms;
+  will-change: transform, opacity;
 }
 
 .sobre-card.show{
@@ -65,10 +111,23 @@ header h1{
   transform:translateY(0);
 }
 
+/* IMAGEM COM FUNDO "NEUTRO" (visual mais clean) */
+.sobre-card .img-wrap{
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(0,255,204,.25);
+  border-radius: 16px;
+  padding: 10px;
+  box-shadow: 0 0 20px rgba(0,255,204,.08);
+  height: fit-content;
+}
+
 .sobre-card img{
   width:320px;
-  border-radius:15px;
+  border-radius:12px;
   object-fit:cover;
+  display:block;
+  /* Se a foto já tiver fundo claro, isso ajuda a "uniformizar" */
+  background: #111;
 }
 
 .sobre-texto h2{
@@ -83,36 +142,70 @@ header h1{
   font-size:15px;
 }
 
+/* Botão voltar (igual ao principal - estilo btn) */
 .voltar{
   text-align:center;
-  margin-top:40px;
+  margin-top:28px;
 }
 
-.voltar a{
-  display:inline-block;
-  padding:12px 30px;
-  background:#555;
+.btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:10px 14px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,.25);
   color:white;
   text-decoration:none;
-  border-radius:30px;
-  font-weight:bold;
+  background:rgba(255,255,255,.06);
+  transition:.25s;
+  font-weight:700;
+  font-size:13px;
+}
+
+.btn:hover{
+  transform:translateY(-1px);
+  background: rgba(0,255,204,.14);
+  border-color: rgba(0,255,204,.65);
+}
+
+footer{
+  margin-top:auto;
+  background: rgba(10,10,10,0.95);
+  border-top: 2px solid #00ffcc;
+  padding: 18px;
+  text-align: center;
+  color: #ccc;
+}
+
+footer .footer-social{
+  margin:10px 0 0;
+  display:flex;
+  justify-content:center;
+  gap:14px;
+}
+
+footer .footer-social a{
+  color:#00ffcc;
+  font-size:18px;
   transition:.3s;
 }
-
-.voltar a:hover{
-  background:#888;
-  transform:scale(1.05);
-}
+footer .footer-social a:hover{ color:white; transform:scale(1.12); }
 
 @media(max-width:900px){
+  .topo{ flex-direction:column; align-items:center; gap:14px; padding:18px 16px; }
+  .menu{ width:100%; align-items:center; }
+  .menu a{ width:90%; }
+
   .sobre-card{
     flex-direction:column;
     text-align:center;
+    gap:22px;
   }
 
   .sobre-card img{
     width:100%;
-    max-width:300px;
+    max-width:320px;
     margin:auto;
   }
 }
@@ -121,15 +214,22 @@ header h1{
 
 <body>
 
-<header>
-  <h1>Sobre Mim</h1>
+<header class="topo">
+  <div class="logo">Gustavo</div>
+
+  <nav class="menu" aria-label="Navegação principal">
+    <a href="https://gustavosales2001.github.io/sobre_mim/">Sobre</a>
+    <a href="https://gustavosales2001.github.io/projetos/">Projetos</a>
+    <a href="https://gustavosales2001.github.io/meus_certificados/">Certificados</a>
+  </nav>
 </header>
 
 <div class="container">
 
   <div class="sobre-card reveal">
-
-    <img src="https://i.imgur.com/uNl6YNa.jpeg" alt="Foto Gustavo">
+    <div class="img-wrap">
+      <img src="https://i.imgur.com/uNl6YNa.jpeg" alt="Foto Gustavo" loading="lazy" decoding="async">
+    </div>
 
     <div class="sobre-texto">
       <h2>Minha trajetória profissional</h2>
@@ -171,32 +271,52 @@ header h1{
         valor à empresa e ao usuário final.
       </p>
     </div>
-
   </div>
 
- <div class="voltar">
-  <a href ="portf.html" >⬅ Voltar ao Portfólio</a>
-</div>
+  <div class="voltar">
+    <a class="btn" href="https://gustavosales2001.github.io/meu_portfolio_site/">
+      <i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Voltar ao Portfólio
+    </a>
+  </div>
 
 </div>
+
+<footer>
+  <p>© 2026 Gustavo Sales - Todos os direitos reservados</p>
+  <div class="footer-social">
+    <a href="https://www.linkedin.com/in/gustavo-sales-3310a6210" target="_blank" rel="noreferrer" aria-label="LinkedIn">
+      <i class="fab fa-linkedin" aria-hidden="true"></i>
+    </a>
+    <a href="https://github.com/GustavoSales2001" target="_blank" rel="noreferrer" aria-label="GitHub">
+      <i class="fab fa-github" aria-hidden="true"></i>
+    </a>
+  </div>
+</footer>
 
 <script>
-const reveals = document.querySelectorAll('.reveal');
-window.addEventListener('scroll', () => {
-  reveals.forEach(el => {
-    const top = el.getBoundingClientRect().top;
-    if(top < window.innerHeight - 100){
-      el.classList.add('show');
-    }
-  });
-});
+  // Reveal mais sênior: IntersectionObserver
+  (function () {
+    const el = document.querySelector(".reveal");
+    if (!el) return;
 
-/* INCLUSÃO: aparece automaticamente após 2 segundos mesmo sem scroll */
-setTimeout(() => {
-  reveals.forEach(el => {
-    el.classList.add('show');
-  });
-}, 2000);
+    const show = () => el.classList.add("show");
+
+    if ("IntersectionObserver" in window) {
+      const io = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          show();
+          io.disconnect();
+        }
+      }, { threshold: 0.15 });
+
+      io.observe(el);
+    } else {
+      setTimeout(show, 300);
+    }
+
+    // fallback: aparece após 1s
+    setTimeout(show, 1000);
+  })();
 </script>
 
 </body>

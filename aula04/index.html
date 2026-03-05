@@ -1,20 +1,62 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portfólio - Gustavo Sales</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Gustavo Sales — Portfólio | Front-end & UI/UX</title>
+  <meta name="description" content="Portfólio de Gustavo Sales. Projetos em Front-end, UI/UX e integrações com Node.js, Express e MySQL (Railway). Veja projetos, certificados e entre em contato." />
+  <meta name="robots" content="index,follow" />
+  <link rel="canonical" href="https://gustavosales2001.github.io/meu_portfolio_site/" />
+
+  <!-- Open Graph (preview no LinkedIn/WhatsApp) -->
+  <meta property="og:title" content="Gustavo Sales — Portfólio" />
+  <meta property="og:description" content="Front-end & UI/UX | Projetos com Node.js, Express e MySQL (Railway). Clique e veja." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://gustavosales2001.github.io/meu_portfolio_site/" />
+  <meta property="og:image" content="https://i.imgur.com/aS0H0KX.png" />
+
+  <!-- Performance: preconnect -->
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="preconnect" href="https://i.imgur.com" crossorigin>
+  <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+
+  <!-- Segurança (CSP leve) - evita alguns ataques comuns. Mantém CDN liberado. -->
+  <meta http-equiv="Content-Security-Policy"
+    content="
+      default-src 'self' https:;
+      img-src 'self' https: data:;
+      style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com;
+      script-src 'self' 'unsafe-inline' https:;
+      connect-src https:;
+      base-uri 'self';
+      form-action 'self';
+      frame-ancestors 'none';
+    ">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
+  <!-- SEO: Schema.org (profissional para recrutadores / rich results) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Gustavo Sales",
+    "url": "https://gustavosales2001.github.io/meu_portfolio_site/",
+    "image": "https://i.imgur.com/aS0H0KX.png",
+    "jobTitle": "Desenvolvedor Front-end & UI/UX",
+    "sameAs": [
+      "https://github.com/GustavoSales2001",
+      "https://www.linkedin.com/in/gustavo-sales-3310a6210",
+      "https://www.instagram.com/gustavo_____salles"
+    ]
+  }
+  </script>
+
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+
+    :root { color-scheme: dark; }
 
     body {
       background-image: url("https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1920&q=80");
@@ -34,24 +76,54 @@
       z-index: -1;
     }
 
+    /* Acessibilidade */
+    .sr-only {
+      position: absolute; width: 1px; height: 1px;
+      padding: 0; margin: -1px; overflow: hidden;
+      clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+
+    /* Skip link (acessibilidade real) */
+    .skip-link {
+      position: absolute;
+      left: -999px;
+      top: 10px;
+      background: #00ffcc;
+      color: #000;
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-weight: 800;
+      z-index: 9999;
+      text-decoration: none;
+    }
+    .skip-link:focus { left: 12px; outline: none; }
+
+    /* Foco visível (acessibilidade) */
+    a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+      outline: 3px solid rgba(0,255,204,.65);
+      outline-offset: 3px;
+    }
+
     .topo {
       width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
       padding: 20px 50px;
+      gap: 20px;
     }
 
     .logo {
       color: #00ffcc;
       font-size: 24px;
       font-weight: bold;
+      letter-spacing: 0.5px;
     }
 
     .menu {
       display: flex;
       flex-direction: column;
-      gap: 15px;
+      gap: 12px;
     }
 
     .menu a {
@@ -69,7 +141,7 @@
     .menu a:hover {
       background: #00ffcc;
       color: black;
-      transform: scale(1.05);
+      transform: scale(1.03);
     }
 
     .container {
@@ -77,29 +149,27 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      padding-bottom: 60px;
+      padding: 24px 12px 60px;
     }
 
     .card {
       background: rgba(20, 20, 20, 0.95);
       border-radius: 25px;
-      padding: 40px 30px;
-      width: 350px;
+      padding: 34px 28px;
+      width: 380px;
       text-align: center;
-      box-shadow: 0 0 30px rgba(0, 255, 200, .3);
+      box-shadow: 0 0 30px rgba(0, 255, 200, .25);
       opacity: 0;
       transform: translateY(40px);
-      transition: 1s;
+      transition: 900ms;
+      will-change: transform, opacity;
     }
 
-    .card.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .card.show { opacity: 1; transform: translateY(0); }
 
     .card img {
-      width: 220px;
-      height: 220px;
+      width: 210px;
+      height: 210px;
       border-radius: 50%;
       border: 4px solid #00ffcc;
       object-fit: cover;
@@ -108,21 +178,54 @@
 
     .card h1 {
       color: white;
-      margin-top: 20px;
+      margin-top: 18px;
       font-size: 26px;
+      line-height: 1.2;
     }
 
-    .card p {
-      color: #ccc;
+    .headline {
+      color: #d6d6d6;
       margin-top: 8px;
       font-size: 14px;
     }
 
+    .subheadline {
+      color: #bdbdbd;
+      margin-top: 10px;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .cta {
+      margin-top: 16px;
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,.25);
+      color: white;
+      text-decoration: none;
+      background: rgba(255,255,255,.06);
+      transition: .25s;
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .btn:hover { transform: translateY(-1px); background: rgba(0,255,204,.14); border-color: rgba(0,255,204,.65); }
+
     .social {
-      margin-top: 25px;
+      margin-top: 18px;
       display: flex;
       justify-content: center;
-      gap: 15px;
+      gap: 12px;
       flex-wrap: wrap;
     }
 
@@ -141,57 +244,91 @@
     .social a:hover {
       background: #00ffcc;
       color: black;
-      transform: scale(1.1);
+      transform: scale(1.08);
+    }
+
+    .skills {
+      margin-top: 16px;
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      font-size: 12px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(0,255,204,.45);
+      background: rgba(0,255,204,.10);
+      color: #eafffa;
     }
 
     form {
-      margin-top: 25px;
+      margin-top: 20px;
       display: flex;
       flex-direction: column;
       gap: 10px;
+      text-align: left;
     }
 
-    form input,
-    form textarea {
+    label { color: #cfcfcf; font-size: 12px; }
+
+    form input, form textarea {
       padding: 10px;
-      border-radius: 8px;
-      border: none;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,.18);
       outline: none;
+      background: rgba(255,255,255,.06);
+      color: #fff;
+    }
+
+    form input:focus, form textarea:focus {
+      border-color: rgba(0,255,204,.75);
+      box-shadow: 0 0 0 3px rgba(0,255,204,.12);
     }
 
     form button {
       padding: 10px;
-      border-radius: 8px;
+      border-radius: 10px;
       border: none;
       background: #00ffcc;
       font-weight: bold;
       cursor: pointer;
-      transition: .3s;
+      transition: .2s;
     }
 
-    form button:hover {
-      background: #00ccaa;
+    form button:hover { background: #00ccaa; }
+
+    form button:disabled { opacity: .6; cursor: not-allowed; }
+
+    .feedback {
+      margin-top: 4px;
+      padding: 10px;
+      border-radius: 10px;
+      font-size: 13px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      color: #eaeaea;
     }
 
-    form button:disabled {
-      opacity: .6;
-      cursor: not-allowed;
-    }
+    .feedback.ok { background: rgba(0,255,204,.12); border-color: rgba(0,255,204,.35); }
+    .feedback.err { background: rgba(255,90,90,.12); border-color: rgba(255,90,90,.35); }
 
     footer {
       margin-top: auto;
       background: rgba(10, 10, 10, 0.95);
       border-top: 2px solid #00ffcc;
-      padding: 20px;
+      padding: 18px;
       text-align: center;
       color: #ccc;
     }
 
     footer .footer-social {
-      margin: 10px 0;
+      margin: 10px 0 0;
       display: flex;
       justify-content: center;
-      gap: 15px;
+      gap: 14px;
     }
 
     footer .footer-social a {
@@ -200,148 +337,262 @@
       transition: .3s;
     }
 
-    footer .footer-social a:hover {
-      color: white;
-      transform: scale(1.2);
-    }
+    footer .footer-social a:hover { color: white; transform: scale(1.12); }
 
-    @media (max-width: 600px) {
-      .topo {
-        flex-direction: column;
-        align-items: center;
-        gap: 15px;
-      }
-
-      .menu {
-        width: 100%;
-        align-items: center;
-      }
-
-      .menu a {
-        width: 80%;
-      }
-
-      .container {
-        padding: 20px;
-        padding-bottom: 60px;
-      }
-
-      .card {
-        width: 90%;
-      }
+    @media (max-width: 700px) {
+      .topo { flex-direction: column; align-items: center; gap: 14px; padding: 18px 16px; }
+      .menu { width: 100%; align-items: center; }
+      .menu a { width: 90%; }
+      .card { width: 92%; }
     }
   </style>
 </head>
 
 <body>
 
+  <!-- Skip link (acessibilidade) -->
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
   <header class="topo">
     <div class="logo">Gustavo</div>
 
-    <nav class="menu">
+    <nav class="menu" aria-label="Navegação principal">
       <a href="https://gustavosales2001.github.io/sobre_mim/">Sobre</a>
       <a href="https://gustavosales2001.github.io/projetos/">Projetos</a>
       <a href="https://gustavosales2001.github.io/meus_certificados/">Certificados</a>
     </nav>
   </header>
 
-  <div class="container">
-    <div class="card reveal">
-
-      <img src="https://i.imgur.com/aS0H0KX.png" alt="Foto Gustavo">
+  <main id="conteudo" class="container">
+    <section class="card reveal" aria-label="Apresentação">
+      <img src="https://i.imgur.com/aS0H0KX.png" alt="Foto de Gustavo Sales" loading="lazy" decoding="async">
 
       <h1>Gustavo Sales</h1>
-      <p>Desenvolvedor Front-end & UI/UX</p>
+      <p class="headline">Front-end & UI/UX • Node.js + MySQL (Railway)</p>
+      <p class="subheadline">
+        Construo interfaces responsivas e integrações simples (API + banco).
+        Foco em clareza, performance e acabamento.
+      </p>
 
-      <div class="social">
-        <a href="https://wa.me/5511933128628" target="_blank"><i class="fab fa-whatsapp"></i></a>
-        <a href="mailto:gustavosalesbarros2001@gmail.com" target="_blank"><i class="fas fa-envelope"></i></a>
-        <a href="https://www.instagram.com/gustavo_____salles" target="_blank"><i class="fab fa-instagram"></i></a>
+      <div class="cta">
+        <a class="btn" href="https://github.com/GustavoSales2001" target="_blank" rel="noreferrer">
+          <i class="fab fa-github" aria-hidden="true"></i> GitHub
+        </a>
+        <a class="btn" href="https://www.linkedin.com/in/gustavo-sales-3310a6210" target="_blank" rel="noreferrer">
+          <i class="fab fa-linkedin" aria-hidden="true"></i> LinkedIn
+        </a>
       </div>
 
-      <form id="formContato">
-        <input type="text" id="nome" name="nome" placeholder="Seu nome" required>
-        <input type="email" id="email" name="email" placeholder="Seu email" required>
-        <textarea id="mensagem" name="mensagem" placeholder="Deixe sua mensagem" rows="3" required></textarea>
-        <button id="btnEnviar" type="submit">Enviar</button>
-      </form>
+      <div class="skills" aria-label="Tecnologias">
+        <span class="badge">JavaScript</span>
+        <span class="badge">HTML/CSS</span>
+        <span class="badge">Node.js</span>
+        <span class="badge">Express</span>
+        <span class="badge">MySQL</span>
+        <span class="badge">Railway</span>
+      </div>
 
-    </div>
-  </div>
+      <div class="social" aria-label="Contato rápido">
+        <a href="https://wa.me/5511933128628" target="_blank" rel="noreferrer" aria-label="WhatsApp">
+          <i class="fab fa-whatsapp" aria-hidden="true"></i>
+        </a>
+        <a href="mailto:gustavosalesbarros2001@gmail.com" target="_blank" rel="noreferrer" aria-label="E-mail">
+          <i class="fas fa-envelope" aria-hidden="true"></i>
+        </a>
+        <a href="https://www.instagram.com/gustavo_____salles" target="_blank" rel="noreferrer" aria-label="Instagram">
+          <i class="fab fa-instagram" aria-hidden="true"></i>
+        </a>
+      </div>
+
+      <!-- API base configurável aqui (mais "sênior" que hardcode no JS) -->
+      <form id="formContato" data-api-base="https://meuportfolio-production-0b48.up.railway.app" novalidate>
+        <!-- Honeypot anti-bot (se preencher, a gente bloqueia) -->
+        <div class="sr-only" aria-hidden="true">
+          <label for="company">Empresa</label>
+          <input type="text" id="company" name="company" tabindex="-1" autocomplete="off">
+        </div>
+
+        <label for="nome">Nome</label>
+        <input type="text" id="nome" name="nome" placeholder="Seu nome" autocomplete="name" required maxlength="255">
+
+        <label for="email">E-mail</label>
+        <input type="email" id="email" name="email" placeholder="Seu email" autocomplete="email" required maxlength="255">
+
+        <label for="mensagem">Mensagem</label>
+        <textarea id="mensagem" name="mensagem" placeholder="Deixe sua mensagem" rows="3" required maxlength="2000"></textarea>
+
+        <button id="btnEnviar" type="submit">Enviar</button>
+
+        <div id="feedback" class="feedback" style="display:none;"></div>
+      </form>
+    </section>
+  </main>
 
   <footer>
     <p>© 2026 Gustavo Sales - Todos os direitos reservados</p>
 
     <div class="footer-social">
-      <a href="https://www.linkedin.com/in/gustavo-sales-3310a6210" target="_blank"><i class="fab fa-linkedin"></i></a>
-      <a href="https://github.com/GustavoSales2001" target="_blank"><i class="fab fa-github"></i></a>
+      <a href="https://www.linkedin.com/in/gustavo-sales-3310a6210" target="_blank" rel="noreferrer" aria-label="LinkedIn">
+        <i class="fab fa-linkedin" aria-hidden="true"></i>
+      </a>
+      <a href="https://github.com/GustavoSales2001" target="_blank" rel="noreferrer" aria-label="GitHub">
+        <i class="fab fa-github" aria-hidden="true"></i>
+      </a>
     </div>
   </footer>
 
   <script>
-    const reveals = document.querySelectorAll('.reveal');
+    // ✅ Reveal mais sênior: IntersectionObserver (melhor performance que scroll)
+    (function () {
+      const el = document.querySelector(".reveal");
+      if (!el) return;
 
-    window.addEventListener('scroll', () => {
-      reveals.forEach(el => {
-        const top = el.getBoundingClientRect().top;
-        if (top < window.innerHeight - 100) {
-          el.classList.add('show');
-        }
-      });
-    });
+      const show = () => el.classList.add("show");
 
-    setTimeout(() => {
-      reveals.forEach(el => {
-        el.classList.add('show');
-      });
-    }, 1000);
+      if ("IntersectionObserver" in window) {
+        const io = new IntersectionObserver((entries) => {
+          if (entries[0].isIntersecting) {
+            show();
+            io.disconnect();
+          }
+        }, { threshold: 0.15 });
 
-    const form = document.getElementById("formContato");
-    const btn = document.getElementById("btnEnviar");
-
-    form.addEventListener("submit", async function (e) {
-      e.preventDefault();
-
-      const nome = document.getElementById("nome").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const mensagem = document.getElementById("mensagem").value.trim();
-
-      if (!nome || !email || !mensagem) {
-        alert("Preencha todos os campos!");
-        return;
+        io.observe(el);
+      } else {
+        // fallback antigo
+        setTimeout(show, 300);
       }
 
-      btn.disabled = true;
-      btn.textContent = "Enviando...";
+      // fallback (igual sua ideia): mostra depois de 1s
+      setTimeout(show, 1000);
+    })();
 
+    // ✅ Form mais sênior:
+    // - sem alert()
+    // - feedback inline
+    // - timeout com AbortController
+    // - honeypot anti-bot
+    // - persistência simples (nome/email)
+    (function () {
+      const form = document.getElementById("formContato");
+      const btn = document.getElementById("btnEnviar");
+      const feedbackEl = document.getElementById("feedback");
+
+      const nomeEl = document.getElementById("nome");
+      const emailEl = document.getElementById("email");
+      const mensagemEl = document.getElementById("mensagem");
+      const honeypotEl = document.getElementById("company");
+
+      // Preenche nome/email se já existirem (UX melhor)
       try {
-        const res = await fetch("https://meuportfolio-production-0b48.up.railway.app/contato", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ nome, email, mensagem })
-        });
+        const savedNome = localStorage.getItem("contato_nome");
+        const savedEmail = localStorage.getItem("contato_email");
+        if (savedNome) nomeEl.value = savedNome;
+        if (savedEmail) emailEl.value = savedEmail;
+      } catch (_) {}
 
-        const contentType = res.headers.get("content-type") || "";
-        const payload = contentType.includes("application/json")
-          ? await res.json()
-          : { mensagem: await res.text() };
+      function setFeedback(type, text) {
+        feedbackEl.className = "feedback " + (type || "");
+        feedbackEl.textContent = text || "";
+        feedbackEl.style.display = text ? "block" : "none";
+      }
 
-        if (!res.ok) {
-          throw new Error(payload.mensagem || "Erro ao enviar mensagem.");
+      function isValidEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      }
+
+      function normalizeApiBase(v) {
+        return String(v || "").trim().replace(/\/+$/, "");
+      }
+
+      form.addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        const apiBase = normalizeApiBase(form.getAttribute("data-api-base"));
+        const nome = nomeEl.value.trim();
+        const email = emailEl.value.trim();
+        const mensagem = mensagemEl.value.trim();
+
+        // Anti-bot: se preencher o honeypot, bloqueia
+        if (honeypotEl && honeypotEl.value.trim()) {
+          setFeedback("err", "Falha na validação. Tente novamente.");
+          return;
         }
 
-        alert(payload.mensagem || "Mensagem enviada!");
-        form.reset();
-      } catch (err) {
-        console.error("Erro:", err);
-        alert(err.message || "Erro ao enviar mensagem.");
-      } finally {
-        btn.disabled = false;
-        btn.textContent = "Enviar";
-      }
-    });
+        if (!nome || !email || !mensagem) {
+          setFeedback("err", "Preencha todos os campos.");
+          return;
+        }
+
+        if (!isValidEmail(email)) {
+          setFeedback("err", "E-mail inválido. Verifique e tente novamente.");
+          return;
+        }
+
+        if (nome.length > 255 || email.length > 255) {
+          setFeedback("err", "Nome ou e-mail muito longos.");
+          return;
+        }
+
+        if (mensagem.length > 2000) {
+          setFeedback("err", "Mensagem muito longa (máx 2000 caracteres).");
+          return;
+        }
+
+        if (!apiBase) {
+          setFeedback("err", "API não configurada (data-api-base).");
+          return;
+        }
+
+        // Salva nome/email (UX)
+        try {
+          localStorage.setItem("contato_nome", nome);
+          localStorage.setItem("contato_email", email);
+        } catch (_) {}
+
+        btn.disabled = true;
+        btn.textContent = "Enviando...";
+        setFeedback("", "");
+
+        // Timeout de rede (se a API travar)
+        const controller = new AbortController();
+        const timeoutMs = 12000; // 12s
+        const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+
+        try {
+          const res = await fetch(apiBase + "/contato", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ nome, email, mensagem }),
+            signal: controller.signal
+          });
+
+          const contentType = res.headers.get("content-type") || "";
+          const payload = contentType.includes("application/json")
+            ? await res.json()
+            : { mensagem: await res.text() };
+
+          if (!res.ok) throw new Error(payload.mensagem || "Erro ao enviar mensagem.");
+
+          setFeedback("ok", payload.mensagem || "Mensagem enviada com sucesso!");
+          form.reset();
+
+          // mantém nome/email salvo, então não limpamos localStorage
+        } catch (err) {
+          const msg =
+            err && err.name === "AbortError"
+              ? "Tempo limite excedido. Verifique sua conexão e tente novamente."
+              : (err && err.message) ? err.message : "Erro ao enviar mensagem.";
+
+          console.error("Erro:", err);
+          setFeedback("err", msg);
+        } finally {
+          clearTimeout(timeoutId);
+          btn.disabled = false;
+          btn.textContent = "Enviar";
+        }
+      });
+    })();
   </script>
 
 </body>

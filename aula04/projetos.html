@@ -5,6 +5,8 @@
 <title>Projetos - Gustavo Sales</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 <style>
 *{
   margin:0;
@@ -13,7 +15,8 @@
   font-family: Arial, sans-serif;
 }
 
-/* FUNDO IGUAL AO SITE PRINCIPAL */
+:root { color-scheme: dark; }
+
 body{
   background-image:url("https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1920&q=80");
   background-size:cover;
@@ -21,9 +24,10 @@ body{
   background-attachment:fixed;
   min-height:100vh;
   color:white;
+  display:flex;
+  flex-direction:column;
 }
 
-/* PELÍCULA */
 body::before{
   content:"";
   position:fixed;
@@ -32,36 +36,60 @@ body::before{
   z-index:-1;
 }
 
-/* HEADER */
-header{
-  text-align:center;
-  padding:30px 20px;
-  background:rgba(20,20,20,0.9);
-  border-bottom:1px solid #444;
+/* Header igual ao principal */
+.topo{
+  width:100%;
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  padding:20px 50px;
+  gap:20px;
+}
+.logo{
+  color:#00ffcc;
+  font-size:24px;
+  font-weight:bold;
+  letter-spacing:0.5px;
+}
+.menu{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.menu a{
+  background: rgba(0, 255, 204, 0.15);
+  border: 2px solid #00ffcc;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 10px 25px;
+  border-radius: 30px;
+  text-align: center;
+  transition: .3s;
+}
+.menu a:hover{
+  background:#00ffcc;
+  color:black;
+  transform:scale(1.03);
 }
 
-header h1{
-  color:#f2f2f2;
-  font-size:32px;
-}
-
-/* CONTAINER */
+/* Container */
 .container{
   max-width:1100px;
   margin:auto;
-  padding:50px 20px;
+  padding:40px 20px 60px;
+  width:100%;
 }
 
-/* CARD */
+/* Card */
 .projeto-card{
   background:rgba(30,30,30,0.95);
   border-radius:20px;
   padding:30px;
   box-shadow:0 0 20px rgba(0,0,0,.6);
-  animation:fadeIn 1.5s ease;
+  animation:fadeIn 1.2s ease;
 }
 
-/* TEXTO */
 .projeto-card h2{
   color:#eaeaea;
   margin-bottom:15px;
@@ -74,69 +102,92 @@ header h1{
   font-size:15px;
 }
 
-/* BOTÃO */
+/* Botões no estilo do principal */
 .botao{
-  text-align:center;
-  margin-top:30px;
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:18px;
 }
 
-.botao a{
-  display:inline-block;
-  padding:14px 35px;
-  background:#555;
+.btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:10px 14px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,.25);
   color:white;
   text-decoration:none;
-  border-radius:30px;
-  font-weight:bold;
-  transition:.3s;
+  background:rgba(255,255,255,.06);
+  transition:.25s;
+  font-weight:700;
+  font-size:13px;
+}
+.btn:hover{
+  transform:translateY(-1px);
+  background: rgba(0,255,204,.14);
+  border-color: rgba(0,255,204,.65);
 }
 
-.botao a:hover{
-  background:#888;
-  transform:scale(1.05);
-}
-
-/* VOLTAR */
 .voltar{
   text-align:center;
-  margin-top:40px;
+  margin-top:28px;
 }
 
-.voltar a{
-  color:#aaa;
-  text-decoration:none;
-  font-size:14px;
+footer{
+  margin-top:auto;
+  background: rgba(10,10,10,0.95);
+  border-top: 2px solid #00ffcc;
+  padding: 18px;
+  text-align: center;
+  color: #ccc;
 }
 
-.voltar a:hover{
-  color:white;
+footer .footer-social{
+  margin:10px 0 0;
+  display:flex;
+  justify-content:center;
+  gap:14px;
 }
 
-/* ANIMAÇÃO */
+footer .footer-social a{
+  color:#00ffcc;
+  font-size:18px;
+  transition:.3s;
+}
+footer .footer-social a:hover{ color:white; transform:scale(1.12); }
+
 @keyframes fadeIn{
   from{opacity:0; transform:translateY(40px);}
   to{opacity:1; transform:translateY(0);}
 }
 
-/* RESPONSIVO */
 @media(max-width:900px){
-  .projeto-card{
-    text-align:center;
-  }
+  .topo{ flex-direction:column; align-items:center; gap:14px; padding:18px 16px; }
+  .menu{ width:100%; align-items:center; }
+  .menu a{ width:90%; }
+  .projeto-card{ text-align:center; }
 }
 </style>
 </head>
 
 <body>
 
-<header>
-  <h1>Meus Projetos</h1>
+<header class="topo">
+  <div class="logo">Gustavo</div>
+
+  <nav class="menu" aria-label="Navegação principal">
+    <a href="https://gustavosales2001.github.io/sobre_mim/">Sobre</a>
+    <a href="https://gustavosales2001.github.io/projetos/">Projetos</a>
+    <a href="https://gustavosales2001.github.io/meus_certificados/">Certificados</a>
+  </nav>
 </header>
 
 <div class="container">
 
   <div class="projeto-card">
-
     <h2>Projeto: Plataforma de Cursos</h2>
 
     <p>
@@ -158,18 +209,34 @@ header h1{
     </p>
 
     <div class="botao">
-    <a href="https://gustavosales2001.github.io/portf.html" target="_blank">
-        🌐 Acessar Projeto
+      <a class="btn" href="https://gustavosales2001.github.io/portf.html" target="_blank" rel="noreferrer">
+        <i class="fa-solid fa-globe" aria-hidden="true"></i> Acessar Projeto
+      </a>
+      <a class="btn" href="https://gustavosales2001.github.io/meu_portfolio_site/" rel="noreferrer">
+        <i class="fa-solid fa-house" aria-hidden="true"></i> Home Portfólio
       </a>
     </div>
-
   </div>
 
- <div class="voltar">
-  <a href="portf.html">⬅ Voltar ao Portfólio</a>
-</div>
+  <div class="voltar">
+    <a class="btn" href="https://gustavosales2001.github.io/meu_portfolio_site/">
+      <i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Voltar ao Portfólio
+    </a>
+  </div>
 
 </div>
+
+<footer>
+  <p>© 2026 Gustavo Sales - Todos os direitos reservados</p>
+  <div class="footer-social">
+    <a href="https://www.linkedin.com/in/gustavo-sales-3310a6210" target="_blank" rel="noreferrer" aria-label="LinkedIn">
+      <i class="fab fa-linkedin" aria-hidden="true"></i>
+    </a>
+    <a href="https://github.com/GustavoSales2001" target="_blank" rel="noreferrer" aria-label="GitHub">
+      <i class="fab fa-github" aria-hidden="true"></i>
+    </a>
+  </div>
+</footer>
 
 </body>
 </html>

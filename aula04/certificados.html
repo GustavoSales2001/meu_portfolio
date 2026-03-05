@@ -5,6 +5,8 @@
 <title>Certificados - Gustavo Sales</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 <style>
 *{
   margin:0;
@@ -13,7 +15,8 @@
   font-family: Arial, sans-serif;
 }
 
-/* FUNDO IGUAL AO SITE PRINCIPAL */
+:root { color-scheme: dark; }
+
 body{
   background-image:url("https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1920&q=80");
   background-size:cover;
@@ -21,9 +24,10 @@ body{
   background-attachment:fixed;
   min-height:100vh;
   color:white;
+  display:flex;
+  flex-direction:column;
 }
 
-/* PELÍCULA ESCURA */
 body::before{
   content:"";
   position:fixed;
@@ -32,30 +36,50 @@ body::before{
   z-index:-1;
 }
 
-/* HEADER */
-header{
-  text-align:center;
-  padding:40px 20px;
-  background:rgba(20,20,20,0.9);
-  border-bottom:1px solid #444;
+/* Header igual ao principal */
+.topo{
+  width:100%;
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  padding:20px 50px;
+  gap:20px;
 }
-
-header h1{
-  color:#f2f2f2;
-  font-size:32px;
+.logo{
+  color:#00ffcc;
+  font-size:24px;
+  font-weight:bold;
+  letter-spacing:0.5px;
 }
-
-header p{
-  margin-top:10px;
-  color:#ccc;
+.menu{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.menu a{
+  background: rgba(0, 255, 204, 0.15);
+  border: 2px solid #00ffcc;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 10px 25px;
+  border-radius: 30px;
+  text-align: center;
+  transition: .3s;
+}
+.menu a:hover{
+  background:#00ffcc;
+  color:black;
+  transform:scale(1.03);
 }
 
 /* CONTEÚDO */
 .container{
   max-width:900px;
   margin:auto;
-  padding:40px 20px;
+  padding:40px 20px 60px;
   text-align:center;
+  width:100%;
 }
 
 .descricao{
@@ -70,7 +94,7 @@ header p{
   background:rgba(30,30,30,0.9);
   border-radius:20px;
   padding:25px;
-  margin-bottom:40px;
+  margin-bottom:26px;
   box-shadow:0 0 15px rgba(0,0,0,.6);
 }
 
@@ -81,59 +105,80 @@ header p{
   margin:15px 0;
 }
 
-.certificado h2{
-  color:#e0e0e0;
-  margin-bottom:15px;
-}
-
-/* BOTÃO */
+/* Botão voltar (igual ao principal) */
 .voltar{
-  margin-top:40px;
+  margin-top:24px;
 }
 
-.voltar a{
-  display:inline-block;
-  padding:12px 30px;
-  background:#555;
+.btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:10px 14px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,.25);
   color:white;
   text-decoration:none;
-  border-radius:30px;
-  font-weight:bold;
-  transition:.3s;
+  background:rgba(255,255,255,.06);
+  transition:.25s;
+  font-weight:700;
+  font-size:13px;
 }
-
-.voltar a:hover{
-  background:#888;
-  transform:scale(1.05);
+.btn:hover{
+  transform:translateY(-1px);
+  background: rgba(0,255,204,.14);
+  border-color: rgba(0,255,204,.65);
 }
 
 /* RODAPÉ */
 footer{
+  margin-top:auto;
   text-align:center;
-  padding:20px;
-  background:rgba(20,20,20,0.9);
-  border-top:1px solid #444;
-  margin-top:40px;
-  color:#aaa;
+  padding:18px;
+  background:rgba(10,10,10,0.95);
+  border-top:2px solid #00ffcc;
+  color:#ccc;
 }
 
+footer .footer-social{
+  margin:10px 0 0;
+  display:flex;
+  justify-content:center;
+  gap:14px;
+}
+
+footer .footer-social a{
+  color:#00ffcc;
+  font-size:18px;
+  transition:.3s;
+}
+footer .footer-social a:hover{ color:white; transform:scale(1.12); }
+
 /* RESPONSIVO */
-@media(max-width:600px){
-  header h1{
-    font-size:26px;
-  }
+@media(max-width:700px){
+  .topo{ flex-direction:column; align-items:center; gap:14px; padding:18px 16px; }
+  .menu{ width:100%; align-items:center; }
+  .menu a{ width:90%; }
 }
 </style>
 </head>
 
 <body>
 
-<header>
-  <h1>Certificado em HTML e CSS</h1>
-  <p>Formação em Desenvolvimento Web</p>
+<header class="topo">
+  <div class="logo">Gustavo</div>
+
+  <nav class="menu" aria-label="Navegação principal">
+    <a href="https://gustavosales2001.github.io/sobre_mim/">Sobre</a>
+    <a href="https://gustavosales2001.github.io/projetos/">Projetos</a>
+    <a href="https://gustavosales2001.github.io/meus_certificados/">Certificados</a>
+  </nav>
 </header>
 
 <div class="container">
+
+  <h1 style="font-size:28px; margin-bottom:8px; color:#f2f2f2;">Certificado em HTML e CSS</h1>
+  <p style="color:#ccc; margin-bottom:20px;">Formação em Desenvolvimento Web</p>
 
   <p class="descricao">
     Este certificado representa minha formação em HTML e CSS, onde desenvolvi habilidades fundamentais
@@ -142,23 +187,33 @@ footer{
   </p>
 
   <div class="certificado">
-    <h2>Certificado - Parte 1</h2>
-    <img src="https://i.imgur.com/4Ncl9eD.jpeg" alt="Certificado HTML e CSS Parte 1">
+    <h2 style="color:#e0e0e0; margin-bottom:10px;">Certificado - Parte 1</h2>
+    <img src="https://i.imgur.com/4Ncl9eD.jpeg" alt="Certificado HTML e CSS Parte 1" loading="lazy" decoding="async">
   </div>
 
   <div class="certificado">
-    <h2>Certificado - Parte 2</h2>
-    <img src="https://i.imgur.com/DxjcEc2.jpeg" alt="Certificado HTML e CSS Parte 2">
+    <h2 style="color:#e0e0e0; margin-bottom:10px;">Certificado - Parte 2</h2>
+    <img src="https://i.imgur.com/DxjcEc2.jpeg" alt="Certificado HTML e CSS Parte 2" loading="lazy" decoding="async">
   </div>
 
   <div class="voltar">
-<a href="portf.html"> ⬅ Voltar ao Portfólio</a>
+    <a class="btn" href="https://gustavosales2001.github.io/meu_portfolio_site/">
+      <i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Voltar ao Portfólio
+    </a>
   </div>
 
 </div>
 
 <footer>
   <p>© 2026 Gustavo Sales - Todos os direitos reservados</p>
+  <div class="footer-social">
+    <a href="https://www.linkedin.com/in/gustavo-sales-3310a6210" target="_blank" rel="noreferrer" aria-label="LinkedIn">
+      <i class="fab fa-linkedin" aria-hidden="true"></i>
+    </a>
+    <a href="https://github.com/GustavoSales2001" target="_blank" rel="noreferrer" aria-label="GitHub">
+      <i class="fab fa-github" aria-hidden="true"></i>
+    </a>
+  </div>
 </footer>
 
 </body>
