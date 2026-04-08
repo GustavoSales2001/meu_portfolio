@@ -1,10 +1,10 @@
-# 🚀 Backend API — Automação e Integração com IA
+#  Backend API — Automação e Integração com IA
 
 API desenvolvida para automação de fluxos e integração entre sistemas, com foco em comunicação via webhooks e suporte a chatbots e plataformas como SimpleDesk.
 
 ---
 
-## 🧠 Objetivo
+##  Objetivo
 
 Este projeto tem como objetivo estruturar uma API capaz de:
 
@@ -16,7 +16,7 @@ Este projeto tem como objetivo estruturar uma API capaz de:
 
 ---
 
-## ⚙️ Funcionalidades
+##  Funcionalidades
 
 - Recebimento de requisições HTTP (GET/POST)
 - Estrutura base para webhooks
@@ -26,7 +26,7 @@ Este projeto tem como objetivo estruturar uma API capaz de:
 
 ---
 
-## 🛠️ Tecnologias
+##  Tecnologias
 
 - Node.js
 - Express
@@ -36,7 +36,7 @@ Este projeto tem como objetivo estruturar uma API capaz de:
 
 ---
 
-## 🔌 Exemplo de endpoint
+##  Exemplo de endpoint
 
 ```bash
 GET /
