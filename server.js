@@ -156,3 +156,23 @@ app.use((req, res) => res.status(404).send("Rota não encontrada."));
 // ===== SERVIDOR =====
 const PORT = Number(process.env.PORT || 3000);
 app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));
+
+const mysql = require('mysql2/promise');
+
+(async () => {
+  try {
+    const conn = await mysql.createConnection({
+      host: 'efdcn0junction.proxy.rlwy.net',
+      port: 54830,
+      user: 'root',
+      password: 'XyPsbqTWnvpIjQwWSGZQIQiRAnefdcmD',
+      database: 'railway',
+      ssl: {}
+    });
+
+    console.log('Conectado com sucesso ao MySQL!');
+    await conn.end();
+  } catch (err) {
+    console.error('Erro ao conectar:', err.message);
+  }
+})();
