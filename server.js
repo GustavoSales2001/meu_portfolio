@@ -5,26 +5,21 @@ require("dotenv").config();
 
 const app = express();
 
-// ===== Config básica =====
 app.disable("x-powered-by");
 app.use(express.json());
-
-// ===== CORS =====
 app.use(cors());
 
-// ===== Variáveis do Railway =====
 const DB_HOST = process.env.MYSQLHOST;
 const DB_USER = process.env.MYSQLUSER;
 const DB_PASSWORD = process.env.MYSQLPASSWORD;
 const DB_NAME = process.env.MYSQLDATABASE;
 const DB_PORT = Number(process.env.MYSQLPORT || 3306);
 
-// ===== Pool de conexão =====
 let pool;
 
 async function initDB() {
   try {
-    pool = await mysql.createPool({
+    pool = mysql.createPool({
       host: DB_HOST,
       user: DB_USER,
       password: DB_PASSWORD,
@@ -32,6 +27,7 @@ async function initDB() {
       port: DB_PORT,
       waitForConnections: true,
       connectionLimit: 10,
+      queueLimit: 0,
       ssl: { rejectUnauthorized: false }
     });
 
@@ -44,26 +40,29 @@ async function initDB() {
 
 initDB();
 
-// ===== ROTAS =====
-
-// Teste básico
 app.get("/", (req, res) => {
   res.send("API rodando 🚀");
 });
 
-// Health check
 app.get("/health", async (req, res) => {
   try {
+    if (!pool) {
+      return res.status(500).json({ ok: false, db: false, erro: "Pool não iniciado" });
+    }
+
     await pool.query("SELECT 1");
     res.json({ ok: true, db: true });
-  } catch {
-    res.status(500).json({ ok: false, db: false });
+  } catch (err) {
+    res.status(500).json({ ok: false, db: false, erro: err.message });
   }
 });
 
-// Teste de banco
 app.get("/teste-db", async (req, res) => {
   try {
+    if (!pool) {
+      return res.status(500).json({ erro: "Pool não iniciado" });
+    }
+
     const [rows] = await pool.query("SELECT NOW() as agora");
     res.json(rows);
   } catch (err) {
@@ -71,9 +70,12 @@ app.get("/teste-db", async (req, res) => {
   }
 });
 
-// Criar tabela automaticamente (opcional)
 app.get("/init-db", async (req, res) => {
   try {
+    if (!pool) {
+      return res.status(500).json({ erro: "Pool não iniciado" });
+    }
+
     await pool.query(`
       CREATE TABLE IF NOT EXISTS contatos (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -90,7 +92,6 @@ app.get("/init-db", async (req, res) => {
   }
 });
 
-// Inserir contato
 app.post("/contato", async (req, res) => {
   const { nome, email, mensagem } = req.body;
 
@@ -99,6 +100,10 @@ app.post("/contato", async (req, res) => {
   }
 
   try {
+    if (!pool) {
+      return res.status(500).json({ erro: "Banco não conectado" });
+    }
+
     const sql = "INSERT INTO contatos (nome, email, mensagem) VALUES (?, ?, ?)";
     await pool.query(sql, [nome, email, mensagem]);
 
@@ -108,12 +113,10 @@ app.post("/contato", async (req, res) => {
   }
 });
 
-// Rota padrão
 app.use((req, res) => {
   res.status(404).send("Rota não encontrada.");
 });
 
-// ===== Servidor =====
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
