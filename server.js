@@ -16,7 +16,7 @@ app.use(cors({
   allowedHeaders: ["Content-Type"]
 }));
 
-app.options("*", cors());
+app.options("/*", cors());
 
 const DB_HOST = process.env.MYSQLHOST;
 const DB_USER = process.env.MYSQLUSER;
