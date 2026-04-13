@@ -95,30 +95,25 @@ app.get("/init-db", async (req, res) => {
 app.post("/contato", async (req, res) => {
   const { nome, email, mensagem } = req.body;
 
+  console.log("Recebido em /contato:", { nome, email, mensagem });
+
   if (!nome || !email || !mensagem) {
     return res.status(400).json({ mensagem: "Preencha todos os campos!" });
   }
 
   try {
     if (!pool) {
-      return res.status(500).json({ erro: "Banco não conectado" });
+      return res.status(500).json({ mensagem: "Banco não conectado" });
     }
 
     const sql = "INSERT INTO contatos (nome, email, mensagem) VALUES (?, ?, ?)";
-    await pool.query(sql, [nome, email, mensagem]);
+    const [result] = await pool.query(sql, [nome, email, mensagem]);
+
+    console.log("Contato salvo com ID:", result.insertId);
 
     res.json({ mensagem: "Mensagem enviada com sucesso!" });
   } catch (err) {
-    res.status(500).json({ erro: err.message });
+    console.error("Erro ao salvar contato:", err);
+    res.status(500).json({ mensagem: err.message || "Erro ao enviar mensagem." });
   }
-});
-
-app.use((req, res) => {
-  res.status(404).send("Rota não encontrada.");
-});
-
-const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, () => {
-  console.log(`🚀 Servidor rodando na porta ${PORT}`);
 });
