@@ -7,7 +7,16 @@ const app = express();
 
 app.disable("x-powered-by");
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: [
+    "https://gustavosales2001.github.io",
+    "http://localhost:3000"
+  ],
+  methods: ["GET", "POST"],
+  allowedHeaders: ["Content-Type"]
+}));
+
+app.options("*", cors());
 
 const DB_HOST = process.env.MYSQLHOST;
 const DB_USER = process.env.MYSQLUSER;
@@ -116,4 +125,4 @@ app.post("/contato", async (req, res) => {
     console.error("Erro ao salvar contato:", err);
     res.status(500).json({ mensagem: err.message || "Erro ao enviar mensagem." });
   }
-});
+  
