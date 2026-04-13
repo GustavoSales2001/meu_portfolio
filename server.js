@@ -125,4 +125,4 @@ app.post("/contato", async (req, res) => {
     console.error("Erro ao salvar contato:", err);
     res.status(500).json({ mensagem: err.message || "Erro ao enviar mensagem." });
   }
-  
+});
