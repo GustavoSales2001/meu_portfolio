@@ -7,16 +7,15 @@ const app = express();
 
 app.disable("x-powered-by");
 app.use(express.json());
+
 app.use(cors({
   origin: [
     "https://gustavosales2001.github.io",
     "http://localhost:3000"
   ],
-  methods: ["GET", "POST"],
+  methods: ["GET", "POST", "OPTIONS"],
   allowedHeaders: ["Content-Type"]
 }));
-
-app.options("/*", cors());
 
 const DB_HOST = process.env.MYSQLHOST;
 const DB_USER = process.env.MYSQLUSER;
@@ -56,48 +55,48 @@ app.get("/", (req, res) => {
 app.get("/health", async (req, res) => {
   try {
     if (!pool) {
-      return res.status(500).json({ ok: false, db: false, erro: "Pool não iniciado" });
+      return res.status(500).json({ ok: false, db: false, mensagem: "Pool não iniciado" });
     }
 
     await pool.query("SELECT 1");
     res.json({ ok: true, db: true });
   } catch (err) {
-    res.status(500).json({ ok: false, db: false, erro: err.message });
+    res.status(500).json({ ok: false, db: false, mensagem: err.message });
   }
 });
 
 app.get("/teste-db", async (req, res) => {
   try {
     if (!pool) {
-      return res.status(500).json({ erro: "Pool não iniciado" });
+      return res.status(500).json({ mensagem: "Pool não iniciado" });
     }
 
     const [rows] = await pool.query("SELECT NOW() as agora");
     res.json(rows);
   } catch (err) {
-    res.status(500).json({ erro: err.message });
+    res.status(500).json({ mensagem: err.message });
   }
 });
 
 app.get("/init-db", async (req, res) => {
   try {
     if (!pool) {
-      return res.status(500).json({ erro: "Pool não iniciado" });
+      return res.status(500).json({ mensagem: "Pool não iniciado" });
     }
 
     await pool.query(`
       CREATE TABLE IF NOT EXISTS contatos (
         id INT AUTO_INCREMENT PRIMARY KEY,
-        nome VARCHAR(255),
-        email VARCHAR(255),
-        mensagem TEXT,
+        nome VARCHAR(255) NOT NULL,
+        email VARCHAR(255) NOT NULL,
+        mensagem TEXT NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
     `);
 
     res.send("Tabela criada com sucesso!");
   } catch (err) {
-    res.status(500).json({ erro: err.message });
+    res.status(500).json({ mensagem: err.message });
   }
 });
 
@@ -125,4 +124,14 @@ app.post("/contato", async (req, res) => {
     console.error("Erro ao salvar contato:", err);
     res.status(500).json({ mensagem: err.message || "Erro ao enviar mensagem." });
   }
+});
+
+app.use((req, res) => {
+  res.status(404).send("Rota não encontrada.");
+});
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`🚀 Servidor rodando na porta ${PORT}`);
 });
